@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18999B521B4C0069003B9295 /* DemandCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18999B511B4C0069003B9295 /* DemandCollectionViewCell.m */; };
 		18E0805F1B4659E200AABF9E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E0805E1B4659E200AABF9E /* main.m */; };
 		18E080621B4659E200AABF9E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E080611B4659E200AABF9E /* AppDelegate.m */; };
 		18E080651B4659E200AABF9E /* ProjectEstimation.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 18E080631B4659E200AABF9E /* ProjectEstimation.xcdatamodeld */; };
@@ -89,6 +90,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		18999B4F1B4BFE4C003B9295 /* Macro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Macro.h; sourceTree = "<group>"; };
+		18999B501B4C0069003B9295 /* DemandCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemandCollectionViewCell.h; sourceTree = "<group>"; };
+		18999B511B4C0069003B9295 /* DemandCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemandCollectionViewCell.m; sourceTree = "<group>"; };
 		18E080591B4659E200AABF9E /* ProjectEstimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectEstimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18E0805D1B4659E200AABF9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18E0805E1B4659E200AABF9E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -292,6 +296,8 @@
 			children = (
 				18E080CC1B466DE800AABF9E /* ProjectTableViewCell.h */,
 				18E080CD1B466DE800AABF9E /* ProjectTableViewCell.m */,
+				18999B501B4C0069003B9295 /* DemandCollectionViewCell.h */,
+				18999B511B4C0069003B9295 /* DemandCollectionViewCell.m */,
 				18E081351B46717100AABF9E /* ProjectView.h */,
 				18E081361B46717100AABF9E /* ProjectView.m */,
 			);
@@ -302,6 +308,7 @@
 			isa = PBXGroup;
 			children = (
 				18E080BD1B46637F00AABF9E /* SlideView */,
+				18999B4F1B4BFE4C003B9295 /* Macro.h */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -534,6 +541,7 @@
 				18E080CB1B466AD700AABF9E /* CardViewController.m in Sources */,
 				18E081371B46717100AABF9E /* ProjectView.m in Sources */,
 				18E0809F1B465EB600AABF9E /* LeftViewController.m in Sources */,
+				18999B521B4C0069003B9295 /* DemandCollectionViewCell.m in Sources */,
 				18E080AB1B46609900AABF9E /* ProjectModel.m in Sources */,
 				18E080621B4659E200AABF9E /* AppDelegate.m in Sources */,
 				18E0809A1B465E7C00AABF9E /* MainViewController.m in Sources */,
@@ -738,6 +746,7 @@
 				18E080811B4659E300AABF9E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		18E080821B4659E300AABF9E /* Build configuration list for PBXNativeTarget "ProjectEstimationTests" */ = {
 			isa = XCConfigurationList;
@@ -746,6 +755,7 @@
 				18E080841B4659E300AABF9E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

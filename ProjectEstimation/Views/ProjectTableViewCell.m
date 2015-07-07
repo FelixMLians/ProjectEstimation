@@ -18,6 +18,10 @@
     self.projectView.selected = YES;
     self.projectView.backgroundColor = [UIColor orangeColor];
     self.projectView.nameString = @"";
+    self.projectView.layer.shadowColor = [UIColor groupTableViewBackgroundColor].CGColor;
+    self.projectView.layer.shadowOpacity = 0.5;
+    self.projectView.layer.shadowOffset = CGSizeMake(0.0, 0.0);
+    self.projectView.layer.shadowRadius = 3.0;
     [self.contentView addSubview:self.projectView];
         
     self.projectView.center = CGPointMake(([UIScreen mainScreen].bounds.size.width - 100)/2, self.center.y);
