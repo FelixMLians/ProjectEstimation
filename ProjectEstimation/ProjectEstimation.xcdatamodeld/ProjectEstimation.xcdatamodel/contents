@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14A389" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="DemandModel" representedClassName="DemandModel" syncable="YES">
+        <attribute name="bgColorString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="demandIdString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="desString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isComplete" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="personString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="picPathString" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="toProject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProjectModel" inverseName="toDemand" inverseEntity="ProjectModel" syncable="YES"/>
+    </entity>
+    <entity name="ProjectModel" representedClassName="ProjectModel" syncable="YES">
+        <attribute name="bgColorString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="isSelected" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="nameString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="projectIdString" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="toDemand" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="DemandModel" inverseName="toProject" inverseEntity="DemandModel" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="ProjectModel" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="DemandModel" positionX="-54" positionY="-9" width="128" height="165"/>
+    </elements>
+</model>
