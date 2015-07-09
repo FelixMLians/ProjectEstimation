@@ -11,6 +11,7 @@
 @implementation ProjectView
 {
     UILabel *nameLabel;
+    UIImageView *bgImgView;
     UIImageView *leftImgView;
 }
 
@@ -25,13 +26,16 @@
 }
 
 - (void)setupUI {
-    self.backgroundColor = self.customColor;
     self.layer.cornerRadius = 6.0;
+    
+    bgImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"book_cover_%d", arc4random()%5]]];
+    bgImgView.frame = self.bounds;
+    [self addSubview:bgImgView];
     
     leftImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 15, self.frame.size.height - 20)];
     leftImgView.image = [UIImage imageNamed:@"menu_accounts_bg_special"];
     [self addSubview:leftImgView];
-    
+
     nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftImgView.frame.size.width + 8, 30, self.frame.size.width - leftImgView.frame.size.width - 20, 30)];
     nameLabel.backgroundColor = [UIColor clearColor];
     nameLabel.text = @"项目名";
@@ -43,12 +47,6 @@
 }
 
 #pragma mark - getter setter method
-
-- (void)setCustomColor:(UIColor *)customColor {
-    _customColor = customColor;
-    
-    [self setNeedsDisplay];
-}
 
 - (void)setNameString:(NSString *)nameString {
     _nameString = nameString;
@@ -75,4 +73,10 @@
 - (NSString *)nameString {
     return _nameString;
 }
+
+- (void)setImageIndex:(NSInteger)imageIndex {
+    _imageIndex = imageIndex;
+    [bgImgView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"book_cover_%zd", imageIndex]]];
+}
+
 @end

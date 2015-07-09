@@ -8,7 +8,9 @@
 
 #import "CardViewController.h"
 
+
 @interface CardViewController ()
+
 
 @end
 
@@ -17,21 +19,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self setUpButtons];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)setUpButtons
+{
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0, 0, 100, 100);
+    button.center = self.view.center;
+    [button setTitle:@"Back" forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(backToMainPage) forControlEvents:UIControlEventTouchUpInside];
+    button.backgroundColor = [UIColor orangeColor];
+    [self.view addSubview:button];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)backToMainPage
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
-*/
 
 @end

@@ -12,5 +12,7 @@
 @interface ProjectTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) ProjectView *projectView;
+@property (nonatomic, strong) UIButton *editButton;
+@property (nonatomic, strong) UIButton *deleteButton;
 
 @end
