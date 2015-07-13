@@ -9,12 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "ProjectView.h"
 
+@class ProjectTableViewCell;
+
 @protocol ProjectCellButtonDelegate <NSObject>
 
-- (void)editProjectCell;
-- (void)deleteProjectCell;
+- (void)editProjectCell:(ProjectTableViewCell *)cell;
+- (void)deleteProjectCell:(ProjectTableViewCell *)cell;
 
 @end
+
+typedef NS_ENUM(NSUInteger, ProjectCellMode) {
+    ProjectCellModeEdit,
+    ProjectCellModeNormal,
+};
 
 @interface ProjectTableViewCell : UITableViewCell
 
@@ -22,5 +29,10 @@
 @property (nonatomic, strong) UIButton *editButton;
 @property (nonatomic, strong) UIButton *deleteButton;
 @property (nonatomic, weak) id<ProjectCellButtonDelegate> delegate;
+@property (nonatomic, assign) ProjectCellMode currentProjectMode;
+@property (nonatomic, strong) NSIndexPath *cellIndexPath;
+@property (nonatomic, strong) NSString *projectIdString;
+
+- (void)addEditButtonAndDeleteButton;
 
 @end

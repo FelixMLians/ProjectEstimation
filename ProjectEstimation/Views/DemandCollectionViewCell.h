@@ -11,6 +11,7 @@
 @interface DemandCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, strong) UILabel *textLabel;
+@property (nonatomic, copy) NSString *displayString;
+@property (nonatomic, strong) UILabel *displayLabel;
 
 @end

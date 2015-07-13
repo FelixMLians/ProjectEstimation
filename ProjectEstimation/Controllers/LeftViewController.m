@@ -9,8 +9,14 @@
 #import "LeftViewController.h"
 #import "AppDelegate.h"
 #import "ProjectTableViewCell.h"
+#import "ProjectManager.h"
+#import "ProjectModel.h"
 
-@interface LeftViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface LeftViewController ()<UITableViewDelegate, UITableViewDataSource, ProjectCellButtonDelegate>
+
+@property (nonatomic, assign) BOOL isEditMode;
+@property (nonatomic, assign) NSIndexPath *currentEditModeCellIndexPath;
+@property (nonatomic, strong) NSMutableArray *tableDataSource;
 
 @end
 
@@ -43,11 +49,19 @@
     [self.view addSubview:label];
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    self.isEditMode = NO;
+    
+    ProjectTableViewCell *cell = (ProjectTableViewCell *)[self.tableview cellForRowAtIndexPath:self.currentEditModeCellIndexPath];
+    [self removeCellButtons:cell];
+}
+
 #pragma mark - UITableViewDataSource UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 7;
+    return self.tableDataSource.count + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -65,28 +79,25 @@
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    if (indexPath.row == 0) {
-        cell.projectView.nameString = @"开通会员";
-    } else if (indexPath.row == 1) {
-        cell.projectView.nameString = @"QQ钱包";
-    } else if (indexPath.row == 2) {
-        cell.projectView.nameString = @"网上营业厅";
-    } else if (indexPath.row == 3) {
-        cell.projectView.nameString = @"个性装扮";
-    } else if (indexPath.row == 4) {
-        cell.projectView.nameString = @"我的收藏";
-    } else if (indexPath.row == 5) {
-        cell.projectView.nameString = @"我的相册";
-    } else if (indexPath.row == 6) {
-        cell.projectView.nameString = @"我的文件";
-    }
+     if (indexPath.row > 0) {
+    ProjectModel *model = self.tableDataSource[indexPath.row - 1];
+    cell.projectView.nameString = model.nameString;
+    cell.projectView.imageIndex = [model.bgColorString integerValue];
+    cell.projectView.selected = [model.isSelected boolValue];
+    cell.projectIdString = model.projectIdString;
+        
+    cell.cellIndexPath = indexPath;
+    // 添加长按手势
+    UILongPressGestureRecognizer *longGr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressAction:)];
+    longGr.minimumPressDuration = 0.8;
+    [cell addGestureRecognizer:longGr];
     
-    if (arc4random() % 3 > 1) {
-        cell.selected = YES;
-    }
-    else {
-        cell.selected = NO;
-    }
+    cell.delegate = self;
+     }
+     else {
+         cell.projectView.imageIndex = 0;
+         cell.selected = NO;
+     }
     
     return cell;
 }
@@ -134,12 +145,84 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.row == 0) {
+        [ProjectManager addProjectWithName:[NSString stringWithFormat:@"项目%zd",self.tableDataSource.count + 1]
+                               imageString:@"3"
+                                isSelected:@"1"
+                                createDate:[NSDate date]];
+        [tableView reloadData];
+    }
+    else {
+    if (!self.isEditMode) {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    //    otherViewController *vc = [[otherViewController alloc] init];
     [tempAppDelegate.LeftSlideVC closeLeftView];//关闭左侧抽屉
+    }
+    else {
+        ProjectTableViewCell *cell = (ProjectTableViewCell *)[self.tableview cellForRowAtIndexPath:self.currentEditModeCellIndexPath];
+        [self removeCellButtons:cell];
+    }
+    }
+}
+
+#pragma mark - gesture method
+
+- (void)handleLongPressAction:(UILongPressGestureRecognizer *)sender
+{
+    if (self.isEditMode) {
+        ProjectTableViewCell *cell = (ProjectTableViewCell *)[self.tableview cellForRowAtIndexPath:self.currentEditModeCellIndexPath];
+        [cell setCurrentProjectMode:ProjectCellModeNormal];
+    }
     
-    //    [tempAppDelegate.mainNavigationController pushViewController:vc animated:NO];
+    self.isEditMode = YES;
+    ProjectTableViewCell *cell = (ProjectTableViewCell *)sender.view;
+    self.currentEditModeCellIndexPath = cell.cellIndexPath;
+    [cell addEditButtonAndDeleteButton];
+
+}
+
+//- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+//    if (self.isEditMode) {
+//        ProjectTableViewCell *cell = (ProjectTableViewCell *)[self.tableview cellForRowAtIndexPath:self.currentEditModeCellIndexPath];
+//        
+//        UITouch *touch = [touches anyObject];
+//        CGPoint touchPoint = [touch locationInView:self.view];
+//        
+//        if (!CGRectContainsPoint(cell.editButton.frame, touchPoint)) {
+//        [cell setCurrentProjectMode:ProjectCellModeNormal];
+//        }
+//    }
+//}
+
+#pragma mark - ProjectCellButtonDelegate
+
+- (void)editProjectCell:(ProjectTableViewCell *)cell {
+    NSLog(@"%@ edit", cell);
+    [self removeCellButtons:cell];
+}
+
+- (void)deleteProjectCell:(ProjectTableViewCell *)cell {
+    NSLog(@"%@ delete", cell);
+//    [self removeCellButtons:cell];
+    [ProjectManager deleteProjectFromDataBaseByIdentifier:cell.projectIdString];
+    [self.tableview reloadData];
+}
+
+- (void)removeCellButtons:(ProjectTableViewCell *)cell
+{
+    [cell setCurrentProjectMode:ProjectCellModeNormal];
+    self.isEditMode = NO;
+}
+
+#pragma mark - 
+
+- (NSMutableArray *)tableDataSource {
+    if (_tableDataSource) {
+        _tableDataSource = [[NSMutableArray alloc] init];
+    }
+    
+    _tableDataSource = [ProjectManager fetchProjects];
+    return _tableDataSource;
 }
 
 @end

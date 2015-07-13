@@ -11,15 +11,51 @@
 #import "CardViewController.h"
 #import "ProjectView.h"
 #import "DemandCollectionViewCell.h"
-#import "ZWCollectionViewFlowLayout.h"
+#import "CHTCollectionViewWaterfallLayout.h"
 
-@interface MainViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ZWwaterFlowDelegate>
+#define CELL_COUNT 30
+#define CELL_IDENTIFIER @"WaterfallCell"
+@interface MainViewController ()<UICollectionViewDataSource, CHTCollectionViewDelegateWaterfallLayout>
 
 @property (nonatomic , strong) UICollectionView *demandCollectionView;
+@property (nonatomic, strong) NSMutableArray *cellSizes;
 
 @end
 
 @implementation MainViewController
+
+#pragma mark - Accessors
+
+- (UICollectionView *)demandCollectionView {
+    if (!_demandCollectionView) {
+        
+        CHTCollectionViewWaterfallLayout *layout = [[CHTCollectionViewWaterfallLayout alloc] init];
+        
+        layout.sectionInset = UIEdgeInsetsMake(15, 15, 15, 15);
+        layout.minimumColumnSpacing = 15;
+        layout.minimumInteritemSpacing = 15;
+        
+        _demandCollectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
+        _demandCollectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        _demandCollectionView.dataSource = self;
+        _demandCollectionView.delegate = self;
+        _demandCollectionView.backgroundColor = [UIColor whiteColor];
+        [_demandCollectionView registerClass:[DemandCollectionViewCell class]
+            forCellWithReuseIdentifier:CELL_IDENTIFIER];
+    }
+    return _demandCollectionView;
+}
+
+- (NSMutableArray *)cellSizes {
+    if (!_cellSizes) {
+        _cellSizes = [NSMutableArray array];
+        for (NSInteger i = 0; i < CELL_COUNT; i++) {
+            CGSize size = CGSizeMake(arc4random() % 50 + 50, arc4random() % 50 + 50);
+            _cellSizes[i] = [NSValue valueWithCGSize:size];
+        }
+    }
+    return _cellSizes;
+}
 
 #pragma mark - life cycle
 
@@ -68,17 +104,6 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:menuBtn];
     
     // collectionView
-    ZWCollectionViewFlowLayout *collectionLayout = [[ZWCollectionViewFlowLayout alloc] init];
-    collectionLayout.degelate = self;
-    
-//    [collectionLayout setSectionInset:UIEdgeInsetsMake(20, 15, 20, 15)];
-    
-    self.demandCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
-                                                   collectionViewLayout:collectionLayout];
-    [self.demandCollectionView registerClass:[DemandCollectionViewCell class] forCellWithReuseIdentifier:@"DemandCollectionViewCell"];
-    
-    self.demandCollectionView.delegate = self;
-    self.demandCollectionView.dataSource = self;
     self.demandCollectionView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.demandCollectionView];
 }
@@ -106,11 +131,6 @@
 
 #pragma mark - UICollectionViewDelegateFlowLayout
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return CGSizeMake((self.view.frame.size.width - 15*3)/2, arc4random() % 300);
-}
-
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
     return 15;
@@ -125,24 +145,28 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 10;
+    return CELL_COUNT;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
 }
 
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    DemandCollectionViewCell *cell = (DemandCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"DemandCollectionViewCell" forIndexPath:indexPath];
+    DemandCollectionViewCell *cell = (DemandCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CELL_IDENTIFIER forIndexPath:indexPath];
 
-    cell.textLabel.text = [NSString stringWithFormat:@"index : %zd", indexPath.row];
+    cell.displayString = [NSString stringWithFormat:@"index : %zd", indexPath.row];
     return cell;
 }
 
-#pragma mark - UICollectionViewDelegate
-
 //代理方法
--(CGFloat)ZWwaterFlow:(ZWCollectionViewFlowLayout *)waterFlow heightForWidth:(CGFloat)width atIndexPath:(NSIndexPath *)indexPach
-{
-    return arc4random() % 300;
+#pragma mark - CHTCollectionViewDelegateWaterfallLayout
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return [self.cellSizes[indexPath.item] CGSizeValue];
 }
+
 
 @end

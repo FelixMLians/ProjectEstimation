@@ -26,9 +26,9 @@
 }
 
 - (void)setupUI {
-    self.layer.cornerRadius = 6.0;
+//    self.layer.cornerRadius = 6.0;
     
-    bgImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"book_cover_%d", arc4random()%5]]];
+    bgImgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"book_cover_%d", 4]]];
     bgImgView.frame = self.bounds;
     [self addSubview:bgImgView];
     
@@ -63,7 +63,7 @@
     
     [self setNeedsDisplay];
     
-    if (self.isSelected) {
+    if (self.isSelected && self.imageIndex > 0) {
         UIImageView *selectImgView = [[UIImageView alloc] initWithFrame:CGRectMake(leftImgView.frame.size.width + 8, 0, 15, 25)];
         selectImgView.image = [UIImage imageNamed:@"menu_selected_icon"];
         [self addSubview:selectImgView];
