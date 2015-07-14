@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PopProjectView : UIView
+@interface PopProjectView : UIView<UITextFieldDelegate>
 
 @property (nonatomic, weak) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *bgColorButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *confirmButton;
+@property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *lineImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *vertialLineImageView;
 
 @end

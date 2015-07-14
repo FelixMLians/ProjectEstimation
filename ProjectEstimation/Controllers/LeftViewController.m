@@ -11,6 +11,7 @@
 #import "ProjectTableViewCell.h"
 #import "ProjectManager.h"
 #import "ProjectModel.h"
+#import "PopProjectView.h"
 
 @interface LeftViewController ()<UITableViewDelegate, UITableViewDataSource, ProjectCellButtonDelegate>
 
@@ -151,6 +152,8 @@
                                 isSelected:@"1"
                                 createDate:[NSDate date]];
         [tableView reloadData];
+        
+        [self popProjectEditView];
     }
     else {
     if (!self.isEditMode) {
@@ -225,4 +228,14 @@
     return _tableDataSource;
 }
 
+#pragma mark -
+
+- (void)popProjectEditView
+{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
+    view.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
+    PopProjectView *popView = [[PopProjectView alloc] initWithFrame:CGRectMake((self.view.frame.size.width -315)/2, (self.view.frame.size.height - 210 - 226)/2, 315, 210)];
+    [view addSubview:popView];
+    [[UIApplication sharedApplication].keyWindow addSubview:view];
+}
 @end

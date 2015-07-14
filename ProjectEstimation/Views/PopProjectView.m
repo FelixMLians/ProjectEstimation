@@ -13,13 +13,22 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self setupUI];
+        [[NSBundle mainBundle] loadNibNamed:@"PopProjectView" owner:self options:nil];
+        [self addSubview:self.contentView];
+        
+        self.contentView.layer.cornerRadius = 6.0;
     }
     return self;
 }
 
-- (void)setupUI {
- 
+- (void)awakeFromNib {
+    for (UIImageView *view in self.lineImageView) {
+        [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y, view.frame.size.width, 0.5)];
+    }
+    
+    CGRect frame = self.vertialLineImageView.frame;
+    frame.size.width = 0.5;
+    [self.vertialLineImageView setFrame:frame];
 }
 
 - (IBAction)chooseBackgroundColor:(UIButton *)sender {
@@ -31,4 +40,9 @@
 - (IBAction)confirmAction:(id)sender {
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return  YES;
+}
 @end

@@ -10,11 +10,14 @@
                 <outlet property="confirmButton" destination="Eea-vp-c6q" id="XuG-IC-3ix"/>
                 <outlet property="contentView" destination="WXF-So-atf" id="3Vd-bg-2JW"/>
                 <outlet property="titleTextField" destination="Zrh-eG-drc" id="wOu-IQ-f96"/>
+                <outlet property="vertialLineImageView" destination="EMl-Ok-mES" id="1Gw-Se-K74"/>
                 <outletCollection property="bgColorButton" destination="kh9-YZ-xEz" id="4RX-vp-EkZ"/>
                 <outletCollection property="bgColorButton" destination="SfK-19-Pan" id="PyY-Up-8cG"/>
                 <outletCollection property="bgColorButton" destination="lTt-bI-4Se" id="97B-Er-ZhA"/>
                 <outletCollection property="bgColorButton" destination="D70-rI-iJN" id="A8q-YZ-PNc"/>
                 <outletCollection property="bgColorButton" destination="WYi-QU-f9M" id="xWF-Zy-Ked"/>
+                <outletCollection property="lineImageView" destination="MNq-Ga-vGc" id="EAk-h2-Faa"/>
+                <outletCollection property="lineImageView" destination="3XQ-mc-UJs" id="cLV-dR-N4M"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -32,7 +35,7 @@
                         </textField>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MNq-Ga-vGc">
                             <rect key="frame" x="0.0" y="51" width="315" height="1"/>
-                            <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kh9-YZ-xEz">
                             <rect key="frame" x="10" y="75" width="50" height="65"/>
@@ -42,13 +45,13 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SfK-19-Pan">
                             <rect key="frame" x="70" y="75" width="50" height="65"/>
-                            <state key="normal" image="book_cover_1.png">
+                            <state key="normal" image="book_cover_2.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lTt-bI-4Se">
                             <rect key="frame" x="132" y="75" width="50" height="65"/>
-                            <state key="normal" image="book_cover_1.png">
+                            <state key="normal" image="book_cover_3.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
@@ -57,19 +60,19 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D70-rI-iJN">
                             <rect key="frame" x="195" y="75" width="50" height="65"/>
-                            <state key="normal" image="book_cover_1.png">
+                            <state key="normal" image="book_cover_4.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WYi-QU-f9M">
                             <rect key="frame" x="255" y="75" width="50" height="65"/>
-                            <state key="normal" image="book_cover_1.png">
+                            <state key="normal" image="book_cover_5.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3XQ-mc-UJs">
                             <rect key="frame" x="0.0" y="167" width="315" height="1"/>
-                            <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oRa-OF-qo0">
                             <rect key="frame" x="0.0" y="176" width="157" height="30"/>
@@ -95,7 +98,7 @@
                         </button>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EMl-Ok-mES">
                             <rect key="frame" x="157" y="167" width="1" height="43"/>
-                            <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         </imageView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -116,5 +119,9 @@
     </objects>
     <resources>
         <image name="book_cover_1.png" width="80" height="107"/>
+        <image name="book_cover_2.png" width="80" height="107"/>
+        <image name="book_cover_3.png" width="80" height="107"/>
+        <image name="book_cover_4.png" width="80" height="107"/>
+        <image name="book_cover_5.png" width="80" height="107"/>
     </resources>
 </document>
