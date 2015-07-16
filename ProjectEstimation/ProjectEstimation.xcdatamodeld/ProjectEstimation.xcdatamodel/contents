@@ -13,13 +13,12 @@
     <entity name="ProjectModel" representedClassName="ProjectModel" syncable="YES">
         <attribute name="bgColorString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="isSelected" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="nameString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="projectIdString" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="toDemand" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="DemandModel" inverseName="toProject" inverseEntity="DemandModel" syncable="YES"/>
     </entity>
     <elements>
-        <element name="ProjectModel" positionX="-63" positionY="-18" width="128" height="135"/>
         <element name="DemandModel" positionX="-54" positionY="-9" width="128" height="165"/>
+        <element name="ProjectModel" positionX="-63" positionY="-18" width="128" height="120"/>
     </elements>
 </model>

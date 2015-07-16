@@ -14,7 +14,6 @@
 
 @dynamic nameString;
 @dynamic bgColorString;
-@dynamic isSelected;
 @dynamic createDate;
 @dynamic projectIdString;
 @dynamic toDemand;

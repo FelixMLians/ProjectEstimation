@@ -38,11 +38,11 @@
 
     nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftImgView.frame.size.width + 8, 30, self.frame.size.width - leftImgView.frame.size.width - 20, 30)];
     nameLabel.backgroundColor = [UIColor clearColor];
-    nameLabel.text = @"项目名";
+    nameLabel.text = @"项目 X计划";
     nameLabel.numberOfLines = 0;
     nameLabel.textAlignment = NSTextAlignmentCenter;
     nameLabel.font = [UIFont systemFontOfSize:13.0];
-    nameLabel.textColor = [UIColor darkGrayColor];
+    nameLabel.textColor = [UIColor whiteColor];
     [self addSubview:nameLabel];
 }
 

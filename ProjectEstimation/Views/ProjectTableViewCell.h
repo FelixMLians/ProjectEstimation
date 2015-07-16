@@ -30,7 +30,6 @@ typedef NS_ENUM(NSUInteger, ProjectCellMode) {
 @property (nonatomic, strong) UIButton *deleteButton;
 @property (nonatomic, weak) id<ProjectCellButtonDelegate> delegate;
 @property (nonatomic, assign) ProjectCellMode currentProjectMode;
-@property (nonatomic, strong) NSIndexPath *cellIndexPath;
 @property (nonatomic, strong) NSString *projectIdString;
 
 - (void)addEditButtonAndDeleteButton;

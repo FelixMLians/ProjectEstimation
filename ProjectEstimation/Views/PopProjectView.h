@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol PopProjectViewDelegate <NSObject>
+
+- (void)cancelPopProjectView;
+- (void)confirmPopProjectViewWithTitle:(NSString *)title index:(NSUInteger)index isEdit:(BOOL)isEdit;
+
+@end
+
 @interface PopProjectView : UIView<UITextFieldDelegate>
 
 @property (nonatomic, weak) IBOutlet UIView *contentView;
@@ -18,4 +25,10 @@
 @property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *lineImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *vertialLineImageView;
 
+@property (nonatomic, weak) id<PopProjectViewDelegate> delegate;
+@property (nonatomic, strong) NSMutableString *titleString;
+@property (nonatomic, assign) NSUInteger imageIndex;
+@property (nonatomic, assign) BOOL isEdit;
+
+- (void)setupBackgroundImage;
 @end

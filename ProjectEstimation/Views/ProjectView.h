@@ -10,7 +10,7 @@
 
 @interface ProjectView : UIView
 
-@property (nonatomic, assign) NSInteger imageIndex;
+@property (nonatomic, assign) NSUInteger imageIndex;
 @property (nonatomic, copy) NSString *nameString;
 @property (nonatomic, getter = isSelected) BOOL selected;
 

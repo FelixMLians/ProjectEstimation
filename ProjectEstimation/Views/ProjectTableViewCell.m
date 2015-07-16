@@ -69,7 +69,7 @@
 
 - (void)editButtonClickAction:(UIButton *)sender {
     if ([self.delegate respondsToSelector:@selector(editProjectCell:)]) {
-        [self.delegate deleteProjectCell:self];
+        [self.delegate editProjectCell:self];
     }
 }
 

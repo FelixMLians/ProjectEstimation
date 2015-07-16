@@ -13,7 +13,6 @@
 
 + (void)addProjectWithName:(NSString *)name
                imageString:(NSString *)image
-                isSelected:(BOOL)selected
                 createDate:(NSDate *)date
 {
     AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -22,7 +21,6 @@
     ProjectModel *model = [NSEntityDescription insertNewObjectForEntityForName:@"ProjectModel" inManagedObjectContext:context];
     model.nameString = name;
     model.bgColorString = image;
-    model.isSelected = [NSNumber numberWithBool:selected];
     model.createDate = date;
     model.projectIdString = [NSUUID UUID].UUIDString;
     
@@ -56,8 +54,34 @@
     }
 }
 
-+ (void)editProjectFromDataBase
++ (void)editProjectWithName:(NSString *)name
+                imageString:(NSString *)image
+               ByIdentifier:(NSString *)identifier
 {
+    AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    NSManagedObjectContext *context = delegate.managedObjectContext;
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ProjectModel" inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    NSError *error;
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    for (ProjectModel *model in fetchedObjects) {
+        if ([model.projectIdString isEqualToString:identifier]) {
+            if (name && ![name isEqualToString:@""]) {
+                model.nameString = name;
+            }
+            if (name && ![name isEqualToString:@""]) {
+                model.bgColorString = image;
+            }
+        }
+    }
+    
+    if(![context save:&error])
+    {
+        NSLog(@"保存失败：%@",[error localizedDescription]);
+    }
     
 }
 

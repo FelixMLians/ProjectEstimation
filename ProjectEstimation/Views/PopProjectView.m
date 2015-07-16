@@ -8,6 +8,12 @@
 
 #import "PopProjectView.h"
 
+@interface PopProjectView()
+
+@property (nonatomic, strong) UIImageView *selectImgView;
+
+@end
+
 @implementation PopProjectView
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -31,18 +37,91 @@
     [self.vertialLineImageView setFrame:frame];
 }
 
+#pragma mark - setup Background Image Selected
+
+- (void)setupBackgroundImage {
+    
+    if (self.imageIndex && self.imageIndex > 0) {
+        
+        if ([self.selectImgView respondsToSelector:@selector(removeFromSuperview)]) {
+            [self.selectImgView respondsToSelector:@selector(removeFromSuperview)];
+        }
+        for (UIButton *button in self.bgColorButton) {
+            
+            if (button.tag == 200 + self.imageIndex - 1) {
+                
+                [button addSubview:self.selectImgView];
+            }
+        }
+    }
+}
+
+#pragma mark - outlet methods
+
 - (IBAction)chooseBackgroundColor:(UIButton *)sender {
+    NSUInteger index = sender.tag - 200 + 1;
+    self.imageIndex = index;
+    
+    [self setupBackgroundImage];
 }
 
 - (IBAction)cancelAction:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(cancelPopProjectView)]) {
+        [self.delegate cancelPopProjectView];
+    }
 }
 
 - (IBAction)confirmAction:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(confirmPopProjectViewWithTitle:index:isEdit:)]) {
+        
+        if (![self.titleTextField.text isEqualToString:@""]) {
+            [self.titleString setString:self.titleTextField.text];
+        }
+        else {
+            [self.titleString setString:@"项目 X计划"];
+        }
+        
+        if (!self.imageIndex || self.imageIndex == 0) {
+            self.imageIndex = 2;
+        }
+        
+        [self.delegate confirmPopProjectViewWithTitle:self.titleString index:self.imageIndex isEdit:self.isEdit];
+    }
 }
+
+#pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
     return  YES;
 }
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if (![textField.text isEqualToString:@""]) {
+        [self.titleString setString:textField.text];
+    }
+    else {
+        [self.titleString setString:@"项目 X计划"];
+    }
+}
+
+#pragma mark -
+
+- (NSMutableString *)titleString {
+    if (!_titleString) {
+        _titleString = [[NSMutableString alloc] init];
+    }
+    return  _titleString;
+}
+
+- (UIImageView *)selectImgView {
+    if (!_selectImgView) {
+        _selectImgView = [[UIImageView alloc] initWithFrame:CGRectMake(8, 0, 10, 16)];
+        _selectImgView.image = [UIImage imageNamed:@"menu_selected_icon"];
+    }
+    return _selectImgView;
+}
+
 @end

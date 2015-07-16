@@ -9,6 +9,12 @@
 #ifndef ProjectEstimation_Macro_h
 #define ProjectEstimation_Macro_h
 
+#pragma mark -
+
+#define kCurrentSelectedCell @"kCurrentSelectedCell"
+
+#pragma mark -
+
 //NavBar高度
 #define NavigationBar_HEIGHT 44
 

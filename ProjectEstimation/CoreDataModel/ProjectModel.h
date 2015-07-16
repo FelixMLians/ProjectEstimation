@@ -15,7 +15,6 @@
 
 @property (nonatomic, retain) NSString * nameString;
 @property (nonatomic, retain) NSString * bgColorString;
-@property (nonatomic, retain) NSNumber * isSelected;
 @property (nonatomic, retain) NSDate * createDate;
 @property (nonatomic, retain) NSString * projectIdString;
 @property (nonatomic, retain) NSSet *toDemand;

@@ -12,11 +12,12 @@
 #import "ProjectManager.h"
 #import "ProjectModel.h"
 #import "PopProjectView.h"
+#import "Macro.h"
 
-@interface LeftViewController ()<UITableViewDelegate, UITableViewDataSource, ProjectCellButtonDelegate>
+@interface LeftViewController ()<UITableViewDelegate, UITableViewDataSource, ProjectCellButtonDelegate, PopProjectViewDelegate>
 
 @property (nonatomic, assign) BOOL isEditMode;
-@property (nonatomic, assign) NSIndexPath *currentEditModeCellIndexPath;
+@property (nonatomic, strong) ProjectTableViewCell *currentCell;
 @property (nonatomic, strong) NSMutableArray *tableDataSource;
 
 @end
@@ -54,8 +55,8 @@
     [super viewDidDisappear:animated];
     self.isEditMode = NO;
     
-    ProjectTableViewCell *cell = (ProjectTableViewCell *)[self.tableview cellForRowAtIndexPath:self.currentEditModeCellIndexPath];
-    [self removeCellButtons:cell];
+    //    ProjectTableViewCell *cell = (ProjectTableViewCell *)[self.tableview cellForRowAtIndexPath:self.currentEditModeCellIndexPath];
+    [self removeCellButtons:self.currentCell];
 }
 
 #pragma mark - UITableViewDataSource UITableViewDelegate
@@ -73,32 +74,39 @@
         cell = [[ProjectTableViewCell alloc] init];
     }
     
-//    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//    cell.textLabel.font = [UIFont systemFontOfSize:20.0f];
+    //    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    //    cell.textLabel.font = [UIFont systemFontOfSize:20.0f];
     cell.backgroundColor = [UIColor clearColor];
-//    cell.textLabel.textColor = [UIColor whiteColor];
+    //    cell.textLabel.textColor = [UIColor whiteColor];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-     if (indexPath.row > 0) {
-    ProjectModel *model = self.tableDataSource[indexPath.row - 1];
-    cell.projectView.nameString = model.nameString;
-    cell.projectView.imageIndex = [model.bgColorString integerValue];
-    cell.projectView.selected = [model.isSelected boolValue];
-    cell.projectIdString = model.projectIdString;
+    if (indexPath.row > 0) {
+        ProjectModel *model = self.tableDataSource[indexPath.row - 1];
+        cell.projectView.nameString = model.nameString;
+        cell.projectView.imageIndex = [model.bgColorString integerValue];
+
+        if ([[NSUserDefaults standardUserDefaults] valueForKey:kCurrentSelectedCell]) {
+        NSString *currentIdentifier = [[NSUserDefaults standardUserDefaults] valueForKey:kCurrentSelectedCell];
+            if (![currentIdentifier isEqualToString:@""] && [currentIdentifier isEqualToString:model.projectIdString]) {
+                cell.selected = YES;
+            }
+        }
+        cell.selected = NO;
         
-    cell.cellIndexPath = indexPath;
-    // 添加长按手势
-    UILongPressGestureRecognizer *longGr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressAction:)];
-    longGr.minimumPressDuration = 0.8;
-    [cell addGestureRecognizer:longGr];
-    
-    cell.delegate = self;
-     }
-     else {
-         cell.projectView.imageIndex = 0;
-         cell.selected = NO;
-     }
+        cell.projectIdString = model.projectIdString;
+        
+        // 添加长按手势
+        UILongPressGestureRecognizer *longGr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressAction:)];
+        longGr.minimumPressDuration = 0.8;
+        [cell addGestureRecognizer:longGr];
+        
+        cell.delegate = self;
+    }
+    else {
+        cell.projectView.imageIndex = 0;
+        cell.selected = NO;
+    }
     
     return cell;
 }
@@ -140,31 +148,31 @@
 {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableview.bounds.size.width, 60)];
     view.backgroundColor = [UIColor clearColor];
-
+    
     return view;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
-        [ProjectManager addProjectWithName:[NSString stringWithFormat:@"项目%zd",self.tableDataSource.count + 1]
-                               imageString:@"3"
-                                isSelected:@"1"
-                                createDate:[NSDate date]];
-        [tableView reloadData];
-        
-        [self popProjectEditView];
+        [self popProjectEditViewByMode:NO WithTitle:nil index:0];
     }
     else {
-    if (!self.isEditMode) {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [tempAppDelegate.LeftSlideVC closeLeftView];//关闭左侧抽屉
-    }
-    else {
-        ProjectTableViewCell *cell = (ProjectTableViewCell *)[self.tableview cellForRowAtIndexPath:self.currentEditModeCellIndexPath];
-        [self removeCellButtons:cell];
-    }
+        if (!self.isEditMode) {
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+            [tempAppDelegate.LeftSlideVC closeLeftView];//关闭左侧抽屉
+            
+            //让cell处于选中状态
+            ProjectTableViewCell *cell = (ProjectTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+            cell.selected = YES;
+            [[NSUserDefaults standardUserDefaults] setObject:cell.projectIdString forKey:kCurrentSelectedCell];
+            [self.tableview reloadData];
+        }
+        else {
+            //        ProjectTableViewCell *cell = (ProjectTableViewCell *)[self.tableview cellForRowAtIndexPath:self.currentEditModeCellIndexPath];
+            [self removeCellButtons:self.currentCell];
+        }
     }
 }
 
@@ -173,24 +181,26 @@
 - (void)handleLongPressAction:(UILongPressGestureRecognizer *)sender
 {
     if (self.isEditMode) {
-        ProjectTableViewCell *cell = (ProjectTableViewCell *)[self.tableview cellForRowAtIndexPath:self.currentEditModeCellIndexPath];
-        [cell setCurrentProjectMode:ProjectCellModeNormal];
+        //        ProjectTableViewCell *cell = (ProjectTableViewCell *)[self.tableview cellForRowAtIndexPath:self.currentEditModeCellIndexPath];
+        if (self.currentCell) {
+        [self.currentCell setCurrentProjectMode:ProjectCellModeNormal];
+        }
     }
     
     self.isEditMode = YES;
     ProjectTableViewCell *cell = (ProjectTableViewCell *)sender.view;
-    self.currentEditModeCellIndexPath = cell.cellIndexPath;
+    self.currentCell = cell;
     [cell addEditButtonAndDeleteButton];
-
+    
 }
 
 //- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 //    if (self.isEditMode) {
 //        ProjectTableViewCell *cell = (ProjectTableViewCell *)[self.tableview cellForRowAtIndexPath:self.currentEditModeCellIndexPath];
-//        
+//
 //        UITouch *touch = [touches anyObject];
 //        CGPoint touchPoint = [touch locationInView:self.view];
-//        
+//
 //        if (!CGRectContainsPoint(cell.editButton.frame, touchPoint)) {
 //        [cell setCurrentProjectMode:ProjectCellModeNormal];
 //        }
@@ -200,13 +210,15 @@
 #pragma mark - ProjectCellButtonDelegate
 
 - (void)editProjectCell:(ProjectTableViewCell *)cell {
-    NSLog(@"%@ edit", cell);
+    NSLog(@" edit");
     [self removeCellButtons:cell];
+    
+    [self popProjectEditViewByMode:YES WithTitle:cell.projectView.nameString index:cell.projectView.imageIndex];
 }
 
 - (void)deleteProjectCell:(ProjectTableViewCell *)cell {
-    NSLog(@"%@ delete", cell);
-//    [self removeCellButtons:cell];
+    NSLog(@" delete");
+    //    [self removeCellButtons:cell];
     [ProjectManager deleteProjectFromDataBaseByIdentifier:cell.projectIdString];
     [self.tableview reloadData];
 }
@@ -217,7 +229,34 @@
     self.isEditMode = NO;
 }
 
-#pragma mark - 
+#pragma mark - PopProjectViewDelegate
+
+- (void)cancelPopProjectView {
+    UIView *view = [[UIApplication sharedApplication].keyWindow viewWithTag:300];
+    
+    if (view) {
+        [view removeFromSuperview];
+    }
+}
+
+- (void)confirmPopProjectViewWithTitle:(NSString *)title index:(NSUInteger)index isEdit:(BOOL)isEdit {
+    
+    [self cancelPopProjectView];
+    
+    if (isEdit) {
+        [ProjectManager editProjectWithName:[NSString stringWithFormat:@"%@",title]
+                                imageString:[NSString stringWithFormat:@"%zd",index]
+                               ByIdentifier:self.currentCell.projectIdString];
+    }
+    else {
+        [ProjectManager addProjectWithName:[NSString stringWithFormat:@"%@",title]
+                               imageString:[NSString stringWithFormat:@"%zd",index]
+                                createDate:[NSDate date]];
+    }
+    [self.tableview reloadData];
+}
+
+#pragma mark -
 
 - (NSMutableArray *)tableDataSource {
     if (_tableDataSource) {
@@ -228,14 +267,27 @@
     return _tableDataSource;
 }
 
-#pragma mark -
+#pragma mark - Private Methods
 
-- (void)popProjectEditView
+- (void)popProjectEditViewByMode:(BOOL)isEdit WithTitle:(NSString *)title index:(NSUInteger)index
 {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     view.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.4];
     PopProjectView *popView = [[PopProjectView alloc] initWithFrame:CGRectMake((self.view.frame.size.width -315)/2, (self.view.frame.size.height - 210 - 226)/2, 315, 210)];
+    popView.delegate = self;
+    
+    if (isEdit) {
+        popView.titleTextField.text = title;
+        popView.titleString = [NSMutableString stringWithString:title];
+        popView.imageIndex = index;
+        popView.isEdit = YES;
+    }
+    
+    [popView setupBackgroundImage];
+    
     [view addSubview:popView];
+    view.tag = 300;
+    
     [[UIApplication sharedApplication].keyWindow addSubview:view];
 }
 @end

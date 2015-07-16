@@ -13,10 +13,14 @@
 
 + (void)addProjectWithName:(NSString *)name
                imageString:(NSString *)image
-                isSelected:(BOOL)selected
                 createDate:(NSDate *)date;
+
 + (void)deleteProjectFromDataBaseByIdentifier:(NSString *)identifier;
-+ (void)editProjectFromDataBase;
+
++ (void)editProjectWithName:(NSString *)name
+                imageString:(NSString *)image
+               ByIdentifier:(NSString *)identifier;
+
 + (NSMutableArray *)fetchProjects;
 
 @end
