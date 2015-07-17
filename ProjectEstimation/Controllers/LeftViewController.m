@@ -86,13 +86,15 @@
         cell.projectView.nameString = model.nameString;
         cell.projectView.imageIndex = [model.bgColorString integerValue];
 
+        cell.projectView.selected = NO;
+        
         if ([[NSUserDefaults standardUserDefaults] valueForKey:kCurrentSelectedCell]) {
         NSString *currentIdentifier = [[NSUserDefaults standardUserDefaults] valueForKey:kCurrentSelectedCell];
+            
             if (![currentIdentifier isEqualToString:@""] && [currentIdentifier isEqualToString:model.projectIdString]) {
-                cell.selected = YES;
+                cell.projectView.selected = YES;
             }
         }
-        cell.selected = NO;
         
         cell.projectIdString = model.projectIdString;
         
@@ -166,7 +168,10 @@
             //让cell处于选中状态
             ProjectTableViewCell *cell = (ProjectTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
             cell.selected = YES;
-            [[NSUserDefaults standardUserDefaults] setObject:cell.projectIdString forKey:kCurrentSelectedCell];
+            
+            NSString *identifierString = cell.projectIdString;
+            
+            [[NSUserDefaults standardUserDefaults] setObject:identifierString forKey:kCurrentSelectedCell];
             [self.tableview reloadData];
         }
         else {
@@ -175,6 +180,7 @@
         }
     }
 }
+
 
 #pragma mark - gesture method
 
