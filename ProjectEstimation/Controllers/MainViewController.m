@@ -11,52 +11,21 @@
 #import "CardViewController.h"
 #import "ProjectView.h"
 #import "DemandCollectionViewCell.h"
-#import "CHTCollectionViewWaterfallLayout.h"
 #import "Macro.h"
+#import "DemandDetailController.h"
 
-#define CELL_COUNT 30
-#define CELL_IDENTIFIER @"WaterfallCell"
-@interface MainViewController ()<UICollectionViewDataSource, CHTCollectionViewDelegateWaterfallLayout>
+static NSUInteger const CELL_COUNT = 20;
+static NSString * const CELL_IDENTIFIER =  @"WaterfallCell";
+
+@interface MainViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic , strong) UICollectionView *demandCollectionView;
 @property (nonatomic, strong) NSMutableArray *cellSizes;
+@property (nonatomic, strong) NSMutableArray *desStringArray;
 
 @end
 
 @implementation MainViewController
-
-#pragma mark - Accessors
-
-- (UICollectionView *)demandCollectionView {
-    if (!_demandCollectionView) {
-        
-        CHTCollectionViewWaterfallLayout *layout = [[CHTCollectionViewWaterfallLayout alloc] init];
-        
-        layout.sectionInset = UIEdgeInsetsMake(15, 15, 15, 15);
-        layout.minimumColumnSpacing = 15;
-        layout.minimumInteritemSpacing = 15;
-        
-        _demandCollectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
-        _demandCollectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-        _demandCollectionView.dataSource = self;
-        _demandCollectionView.delegate = self;
-        _demandCollectionView.backgroundColor = [UIColor whiteColor];
-        [_demandCollectionView registerClass:[DemandCollectionViewCell class]
-            forCellWithReuseIdentifier:CELL_IDENTIFIER];
-    }
-    return _demandCollectionView;
-}
-
-- (NSMutableArray *)cellSizes {
-    if (!_cellSizes) {
-        _cellSizes = [NSMutableArray array];
-        for (NSInteger i = 0; i < CELL_COUNT; i++) {
-            CGSize size = CGSizeMake(arc4random() % 50 + 50, arc4random() % 50 + 50);
-            _cellSizes[i] = [NSValue valueWithCGSize:size];
-        }
-    }
-    return _cellSizes;
-}
 
 #pragma mark - life cycle
 
@@ -91,12 +60,10 @@
 - (void)setUpUI
 {
     self.title = @"主界面";
-    self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor], NSFontAttributeName : [UIFont boldSystemFontOfSize:18.0]}];
     self.navigationController.navigationBar.translucent = NO;
-//    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, [UIFont boldSystemFontOfSize:20.0], nil]];
-    
     
     // leftBarButtonItem
     UIButton *menuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -178,16 +145,60 @@
 {
     DemandCollectionViewCell *cell = (DemandCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CELL_IDENTIFIER forIndexPath:indexPath];
 
-    cell.displayString = [NSString stringWithFormat:@"index : %zd", indexPath.row];
+    if (0 == indexPath.row) {
+        cell.image = [UIImage imageNamed:@"addBtn"];
+        cell.hideDesView = YES;
+    }
+    else {
+    cell.image = nil;
+    cell.desString = [self.desStringArray objectAtIndex:indexPath.row];
+    }
+    
     return cell;
 }
 
-//代理方法
-#pragma mark - CHTCollectionViewDelegateWaterfallLayout
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return [self.cellSizes[indexPath.item] CGSizeValue];
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    DemandCollectionViewCell *cell = (DemandCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    DemandDetailController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"DemandDetailVC"];
+    vc.demandIdString = cell.demandIdString;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
+#pragma mark - Accessors
+
+- (UICollectionView *)demandCollectionView {
+    if (!_demandCollectionView) {
+        
+        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+        
+        layout.sectionInset = UIEdgeInsetsMake(15, 15, 15, 15);
+        layout.minimumLineSpacing = 15;
+        layout.minimumInteritemSpacing = 15;
+        layout.itemSize = CGSizeMake((SCREEN_WIDTH - 15*3)/2, (SCREEN_WIDTH - 15*3)/2);
+        
+        _demandCollectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
+        _demandCollectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        _demandCollectionView.dataSource = self;
+        _demandCollectionView.delegate = self;
+        _demandCollectionView.backgroundColor = [UIColor whiteColor];
+        [_demandCollectionView registerClass:[DemandCollectionViewCell class]
+                  forCellWithReuseIdentifier:CELL_IDENTIFIER];
+    }
+    return _demandCollectionView;
+}
+
+- (NSMutableArray *)desStringArray {
+    if (!_desStringArray) {
+        _desStringArray = [NSMutableArray array];
+        for (int i = 0; i < CELL_COUNT; i ++) {
+            NSMutableString *string = [[NSMutableString alloc] init];
+            for (int j = arc4random()%(i +1) ; j < i + 1; j ++) {
+                [string appendString:@"任务 alias"];
+            }
+            [_desStringArray addObject:string];
+        }
+    }
+    return _desStringArray;
+}
 
 @end

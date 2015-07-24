@@ -77,7 +77,26 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6ck-2n-0NB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-498.5" y="-407.5"/>
+            <point key="canvasLocation" x="-586.5" y="-843.5"/>
+        </scene>
+        <!--Demand Detail Controller-->
+        <scene sceneID="cUK-Zv-OUO">
+            <objects>
+                <viewController storyboardIdentifier="DemandDetailVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jlv-mJ-t5w" customClass="DemandDetailController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="NrY-ts-nES"/>
+                        <viewControllerLayoutGuide type="bottom" id="EiH-6q-EIH"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2Jg-SB-ujz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yPq-Do-3cy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-586.5" y="86.5"/>
         </scene>
         <!--Left Slide View Controller-->
         <scene sceneID="Kya-mW-DVS">
@@ -100,4 +119,5 @@
             <point key="canvasLocation" x="-2298.5" y="-418.5"/>
         </scene>
     </scenes>
+    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>

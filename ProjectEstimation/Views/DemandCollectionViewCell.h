@@ -10,8 +10,9 @@
 
 @interface DemandCollectionViewCell : UICollectionViewCell
 
-@property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, copy) NSString *displayString;
-@property (nonatomic, strong) UILabel *displayLabel;
+@property (nonatomic, copy) NSString *desString;
+@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, copy) NSString *demandIdString;
+@property (nonatomic) BOOL hideDesView;
 
 @end

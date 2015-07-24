@@ -14,7 +14,7 @@
 #import "PopProjectView.h"
 #import "Macro.h"
 
-@interface LeftViewController ()<UITableViewDelegate, UITableViewDataSource, ProjectCellButtonDelegate, PopProjectViewDelegate>
+@interface LeftViewController ()<UITableViewDelegate, UITableViewDataSource, ProjectCellButtonDelegate, PopProjectViewDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, assign) BOOL isEditMode;
 @property (nonatomic, strong) ProjectTableViewCell *currentCell;
@@ -45,9 +45,10 @@
     [self.view addSubview:tableview];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
-    label.center = CGPointMake(self.view.center.x, self.view.frame.size.height - label.frame.size.height/2);
+    label.center = CGPointMake(self.view.center.x - 50, self.view.frame.size.height - label.frame.size.height/2);
     label.text = @"长按编辑或者删除项目";
-    label.textColor = [UIColor lightTextColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor whiteColor];
     label.font = [UIFont systemFontOfSize:13.0];
     [self.view addSubview:label];
 }
@@ -219,17 +220,20 @@
 #pragma mark - ProjectCellButtonDelegate
 
 - (void)editProjectCell:(ProjectTableViewCell *)cell {
-    NSLog(@" edit");
+    
     [self removeCellButtons:cell];
     
     [self popProjectEditViewByMode:YES WithTitle:cell.projectView.nameString index:cell.projectView.imageIndex];
 }
 
 - (void)deleteProjectCell:(ProjectTableViewCell *)cell {
-    NSLog(@" delete");
-    //    [self removeCellButtons:cell];
-    [ProjectManager deleteProjectFromDataBaseByIdentifier:cell.projectIdString];
-    [self.tableview reloadData];
+   
+    UIAlertView *view = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                   message:@"您是否确定要删除所选账本"
+                                                  delegate:self
+                                         cancelButtonTitle:@"取消"
+                                         otherButtonTitles:@"确定", nil];
+    [view show];
 }
 
 - (void)removeCellButtons:(ProjectTableViewCell *)cell
@@ -263,6 +267,15 @@
                                 createDate:[NSDate date]];
     }
     [self.tableview reloadData];
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (1 == buttonIndex) {
+        [ProjectManager deleteProjectFromDataBaseByIdentifier:self.currentCell.projectIdString];
+        [self.tableview reloadData];
+    }
 }
 
 #pragma mark -
