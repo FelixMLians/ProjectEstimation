@@ -92,6 +92,9 @@
     NSManagedObjectContext *context = delegate.managedObjectContext;
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSSortDescriptor *sort=[NSSortDescriptor sortDescriptorWithKey:@"createDate" ascending:NO];
+    fetchRequest.sortDescriptors = @[sort];
+    
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"ProjectModel" inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     

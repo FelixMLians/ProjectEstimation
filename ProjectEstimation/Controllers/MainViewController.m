@@ -12,6 +12,7 @@
 #import "ProjectView.h"
 #import "DemandCollectionViewCell.h"
 #import "CHTCollectionViewWaterfallLayout.h"
+#import "Macro.h"
 
 #define CELL_COUNT 30
 #define CELL_IDENTIFIER @"WaterfallCell"
@@ -71,6 +72,9 @@
 
     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [tempAppDelegate.LeftSlideVC setPanEnabled:YES];
+    
+    // 标题改变通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeProjectTitle:) name:kCurrentTitleChangeNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -88,15 +92,13 @@
 {
     self.title = @"主界面";
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    [self.navigationController.navigationBar
+     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor], NSFontAttributeName : [UIFont boldSystemFontOfSize:18.0]}];
+    self.navigationController.navigationBar.translucent = NO;
+//    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, [UIFont boldSystemFontOfSize:20.0], nil]];
     
-    // rightBarButtonItem
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"估算模式"
-                                                                              style:UIBarButtonItemStyleDone
-                                                                             target:self
-                                                                             action:@selector(gotoCardMode:)];
     
     // leftBarButtonItem
-    
     UIButton *menuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     menuBtn.frame = CGRectMake(0, 0, 20, 18);
     [menuBtn setBackgroundImage:[UIImage imageNamed:@"menu"] forState:UIControlStateNormal];
@@ -106,6 +108,20 @@
     // collectionView
     self.demandCollectionView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.demandCollectionView];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navBar"] forBarMetrics:UIBarMetricsDefault];
+    
+    // rightBarButtonItem
+    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    rightBtn.frame = CGRectMake(0, 0, 70, 25);
+    rightBtn.layer.cornerRadius = 6.0;
+    rightBtn.layer.borderColor = [UIColor groupTableViewBackgroundColor].CGColor;
+    rightBtn.layer.borderWidth = 1.0;
+    [rightBtn setTitle:@"项目推广" forState:UIControlStateNormal];
+    [rightBtn setTitleColor:[UIColor groupTableViewBackgroundColor] forState:UIControlStateNormal];
+    [rightBtn.titleLabel setFont:[UIFont boldSystemFontOfSize:16.0]];
+    [rightBtn addTarget:self action:@selector(gotoCardMode:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
 }
 
 - (void) openOrCloseLeftList
@@ -127,6 +143,11 @@
     [self.navigationController presentViewController:cardVC animated:YES completion:^{
         
     }];
+}
+
+- (void)changeProjectTitle:(NSNotification *)sender
+{
+    self.title = sender.object;
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout

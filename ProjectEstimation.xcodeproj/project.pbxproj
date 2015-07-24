@@ -83,6 +83,10 @@
 		18E080CB1B466AD700AABF9E /* CardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E080CA1B466AD700AABF9E /* CardViewController.m */; };
 		18E080CE1B466DE800AABF9E /* ProjectTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E080CD1B466DE800AABF9E /* ProjectTableViewCell.m */; };
 		18E081371B46717100AABF9E /* ProjectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E081361B46717100AABF9E /* ProjectView.m */; };
+		62EB5F271B60DB6100017A94 /* navBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62EB5F231B60DB6100017A94 /* navBar@2x.png */; };
+		62EB5F281B60DB6100017A94 /* navBar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62EB5F241B60DB6100017A94 /* navBar@3x.png */; };
+		62EB5F2D1B60DD1A00017A94 /* leftbackiamge1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62EB5F2B1B60DD1A00017A94 /* leftbackiamge1.jpg */; };
+		62EB5F301B60DE4F00017A94 /* leftbackiamge2.png in Resources */ = {isa = PBXBuildFile; fileRef = 62EB5F2F1B60DE4F00017A94 /* leftbackiamge2.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -191,6 +195,10 @@
 		18E080CD1B466DE800AABF9E /* ProjectTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectTableViewCell.m; sourceTree = "<group>"; };
 		18E081351B46717100AABF9E /* ProjectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectView.h; sourceTree = "<group>"; };
 		18E081361B46717100AABF9E /* ProjectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectView.m; sourceTree = "<group>"; };
+		62EB5F231B60DB6100017A94 /* navBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navBar@2x.png"; sourceTree = "<group>"; };
+		62EB5F241B60DB6100017A94 /* navBar@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navBar@3x.png"; sourceTree = "<group>"; };
+		62EB5F2B1B60DD1A00017A94 /* leftbackiamge1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = leftbackiamge1.jpg; sourceTree = "<group>"; };
+		62EB5F2F1B60DE4F00017A94 /* leftbackiamge2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leftbackiamge2.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -401,6 +409,10 @@
 				18CD9BA41B53B0EF002701E2 /* background13@2x.jpg */,
 				18CD9BA51B53B0EF002701E2 /* background13@3x.jpg */,
 				18CD9BA61B53B0EF002701E2 /* leftbackiamge.png */,
+				62EB5F2F1B60DE4F00017A94 /* leftbackiamge2.png */,
+				62EB5F2B1B60DD1A00017A94 /* leftbackiamge1.jpg */,
+				62EB5F231B60DB6100017A94 /* navBar@2x.png */,
+				62EB5F241B60DB6100017A94 /* navBar@3x.png */,
 				18CD9BA71B53B0EF002701E2 /* menu_accounts_bg_special@2x.png */,
 				18CD9BA81B53B0EF002701E2 /* menu_accounts_bg_special@3x.png */,
 				18CD9BA91B53B0EF002701E2 /* book_cover_0@2x.png */,
@@ -465,6 +477,7 @@
 				TargetAttributes = {
 					18E080581B4659E200AABF9E = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = PH3E85G6DY;
 					};
 					18E080741B4659E300AABF9E = {
 						CreatedOnToolsVersion = 6.4;
@@ -497,6 +510,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18CD9BB11B53B0EF002701E2 /* background1@2x.png in Resources */,
+				62EB5F281B60DB6100017A94 /* navBar@3x.png in Resources */,
 				18CD9B8B1B535ED8002701E2 /* cat4.jpg in Resources */,
 				18CD9BB61B53B0EF002701E2 /* background3@3x.png in Resources */,
 				18CD9BC41B53B0EF002701E2 /* background10@3x.jpg in Resources */,
@@ -518,6 +532,7 @@
 				18CD9BEE1B53B68A002701E2 /* book_cover_2@3x.png in Resources */,
 				18E080701B4659E200AABF9E /* LaunchScreen.xib in Resources */,
 				18CD9BBB1B53B0EF002701E2 /* background6@2x.png in Resources */,
+				62EB5F2D1B60DD1A00017A94 /* leftbackiamge1.jpg in Resources */,
 				18CD9BC21B53B0EF002701E2 /* background9@3x.jpg in Resources */,
 				18CD9BBC1B53B0EF002701E2 /* background6@3x.png in Resources */,
 				18CD9BC91B53B0EF002701E2 /* background13@2x.jpg in Resources */,
@@ -547,8 +562,10 @@
 				18CD9BD41B53B0EF002701E2 /* menu_selected_icon@3x.png in Resources */,
 				18CD9BEC1B53B68A002701E2 /* book_cover_1@3x.png in Resources */,
 				18CD9BC81B53B0EF002701E2 /* background12@3x.jpg in Resources */,
+				62EB5F301B60DE4F00017A94 /* leftbackiamge2.png in Resources */,
 				18CD9BBA1B53B0EF002701E2 /* background5@3x.png in Resources */,
 				18CD9BF01B53B68A002701E2 /* book_cover_3@3x.png in Resources */,
+				62EB5F271B60DB6100017A94 /* navBar@2x.png in Resources */,
 				18CD9BFD1B53C0CD002701E2 /* PopProjectView.xib in Resources */,
 				18CD9BCC1B53B0EF002701E2 /* menu_accounts_bg_special@2x.png in Resources */,
 				18CD9BBE1B53B0EF002701E2 /* background7@3x.jpg in Resources */,
@@ -668,6 +685,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -704,6 +722,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -713,10 +732,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ProjectEstimation/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -724,10 +746,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ProjectEstimation/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

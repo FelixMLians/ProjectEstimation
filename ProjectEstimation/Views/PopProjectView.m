@@ -23,6 +23,7 @@
         [self addSubview:self.contentView];
         
         self.contentView.layer.cornerRadius = 6.0;
+        self.titleTextField.delegate = self;
     }
     return self;
 }
@@ -93,7 +94,8 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [textField resignFirstResponder];
+    [self.titleTextField resignFirstResponder];
+    
     return  YES;
 }
 
@@ -105,6 +107,8 @@
     else {
         [self.titleString setString:@"项目 X计划"];
     }
+    
+    [self.titleTextField resignFirstResponder];
 }
 
 #pragma mark -

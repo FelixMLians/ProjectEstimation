@@ -8,6 +8,8 @@
 
 #import "ProjectTableViewCell.h"
 
+static CGFloat kProjectTableViewCellHeight = 120;
+
 @implementation ProjectTableViewCell
 
 - (id)init
@@ -36,7 +38,7 @@
     //    self.projectView.layer.shadowOffset = CGSizeMake(0.0, 2.0);
     //    self.projectView.layer.shadowRadius = 3.0;
     [self.contentView addSubview:self.projectView];
-    self.projectView.center = CGPointMake(([UIScreen mainScreen].bounds.size.width - 100)/2, self.center.y);
+    self.projectView.center = CGPointMake(([UIScreen mainScreen].bounds.size.width - 100)/2, kProjectTableViewCellHeight/2);
     
     self.currentProjectMode = ProjectCellModeNormal;
 }

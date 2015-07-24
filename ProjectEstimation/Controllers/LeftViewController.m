@@ -31,13 +31,14 @@
     // Do any additional setup after loading the view.
     
     UIImageView *imageview = [[UIImageView alloc] initWithFrame:self.view.bounds];
-    imageview.image = [UIImage imageNamed:@"leftbackiamge"];
+    imageview.image = [UIImage imageNamed:@"leftbackiamge1.jpg"];
     [self.view addSubview:imageview];
     
     UITableView *tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     self.tableview = tableview;
     tableview.dataSource = self;
     tableview.delegate  = self;
+    self.tableview.bounces = NO;
     tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     tableview.showsVerticalScrollIndicator = NO;
     tableview.backgroundColor = [UIColor clearColor];
@@ -107,7 +108,7 @@
     }
     else {
         cell.projectView.imageIndex = 0;
-        cell.selected = NO;
+        cell.projectView.selected = NO;
     }
     
     return cell;
@@ -120,7 +121,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 120;
+    return 80;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -173,6 +174,8 @@
             
             [[NSUserDefaults standardUserDefaults] setObject:identifierString forKey:kCurrentSelectedCell];
             [self.tableview reloadData];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kCurrentTitleChangeNotification object:cell.projectView.nameString];
         }
         else {
             //        ProjectTableViewCell *cell = (ProjectTableViewCell *)[self.tableview cellForRowAtIndexPath:self.currentEditModeCellIndexPath];

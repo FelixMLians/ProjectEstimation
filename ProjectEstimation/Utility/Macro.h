@@ -13,6 +13,8 @@
 
 #define kCurrentSelectedCell @"kCurrentSelectedCell"
 
+#define kCurrentTitleChangeNotification @"CurrentTitleChangeNotification"
+
 #pragma mark -
 
 //NavBar高度
