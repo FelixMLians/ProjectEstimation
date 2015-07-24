@@ -98,9 +98,4 @@
     }
 }
 
-- (void)setHideDesView:(BOOL)hideDesView {
-    _hideDesView = hideDesView;
-    
-    [self.desView setHidden:YES];
-}
 @end

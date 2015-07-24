@@ -14,14 +14,16 @@
 #import "Macro.h"
 #import "DemandDetailController.h"
 
-static NSUInteger const CELL_COUNT = 20;
+static NSUInteger const CELL_COUNT = 15;
 static NSString * const CELL_IDENTIFIER =  @"WaterfallCell";
+static NSUInteger const ADDBUTTON_WIDTH = 40;
 
 @interface MainViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic , strong) UICollectionView *demandCollectionView;
 @property (nonatomic, strong) NSMutableArray *cellSizes;
 @property (nonatomic, strong) NSMutableArray *desStringArray;
+@property (nonatomic, strong) UIButton *addDemandButton;
 
 @end
 
@@ -33,6 +35,7 @@ static NSString * const CELL_IDENTIFIER =  @"WaterfallCell";
     [super viewDidLoad];
 
     [self setUpUI];
+    [self setupAddButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -91,6 +94,19 @@ static NSString * const CELL_IDENTIFIER =  @"WaterfallCell";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
 }
 
+- (void)setupAddButton
+{
+    self.addDemandButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.addDemandButton.frame = CGRectMake(SCREEN_WIDTH - ADDBUTTON_WIDTH - 10, SCREEN_HEIGHT - ADDBUTTON_WIDTH - 10 - 64, ADDBUTTON_WIDTH, ADDBUTTON_WIDTH);
+    [self.addDemandButton.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.addDemandButton.layer setShadowOffset:CGSizeMake(0, 3)];
+    [self.addDemandButton.layer setShadowOpacity:1];
+    [self.addDemandButton.layer setShadowRadius:6.0];
+    [self.addDemandButton setImage:[UIImage imageNamed:@"add1"] forState:UIControlStateNormal];
+    [self.addDemandButton addTarget:self action:@selector(addDemandAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.addDemandButton];
+}
+
 - (void) openOrCloseLeftList
 {
     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -115,6 +131,11 @@ static NSString * const CELL_IDENTIFIER =  @"WaterfallCell";
 - (void)changeProjectTitle:(NSNotification *)sender
 {
     self.title = sender.object;
+}
+
+- (void)addDemandAction:(UIButton *)sender
+{
+    
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
@@ -145,14 +166,8 @@ static NSString * const CELL_IDENTIFIER =  @"WaterfallCell";
 {
     DemandCollectionViewCell *cell = (DemandCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CELL_IDENTIFIER forIndexPath:indexPath];
 
-    if (0 == indexPath.row) {
-        cell.image = [UIImage imageNamed:@"addBtn"];
-        cell.hideDesView = YES;
-    }
-    else {
     cell.image = nil;
     cell.desString = [self.desStringArray objectAtIndex:indexPath.row];
-    }
     
     return cell;
 }

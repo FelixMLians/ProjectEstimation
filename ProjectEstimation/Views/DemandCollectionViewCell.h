@@ -13,6 +13,5 @@
 @property (nonatomic, copy) NSString *desString;
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, copy) NSString *demandIdString;
-@property (nonatomic) BOOL hideDesView;
 
 @end
