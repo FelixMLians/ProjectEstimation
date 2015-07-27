@@ -55,7 +55,6 @@
 		18E0809A1B465E7C00AABF9E /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E080991B465E7C00AABF9E /* MainViewController.m */; };
 		18E0809F1B465EB600AABF9E /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E0809E1B465EB600AABF9E /* LeftViewController.m */; };
 		18E080AB1B46609900AABF9E /* ProjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E080A81B46609900AABF9E /* ProjectModel.m */; };
-		18E080AC1B46609900AABF9E /* DemandModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E080AA1B46609900AABF9E /* DemandModel.m */; };
 		18E080C21B46638E00AABF9E /* LeftSlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E080BF1B46638E00AABF9E /* LeftSlideViewController.m */; };
 		18E080C31B46638E00AABF9E /* UIView_extra.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E080C11B46638E00AABF9E /* UIView_extra.m */; };
 		18E080CB1B466AD700AABF9E /* CardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E080CA1B466AD700AABF9E /* CardViewController.m */; };
@@ -69,6 +68,9 @@
 		62EB5F281B60DB6100017A94 /* navBar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62EB5F241B60DB6100017A94 /* navBar@3x.png */; };
 		62EB5F2D1B60DD1A00017A94 /* leftbackiamge1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62EB5F2B1B60DD1A00017A94 /* leftbackiamge1.jpg */; };
 		62EB5F301B60DE4F00017A94 /* leftbackiamge2.png in Resources */ = {isa = PBXBuildFile; fileRef = 62EB5F2F1B60DE4F00017A94 /* leftbackiamge2.png */; };
+		62ED0C341B65D4FD00F0A5C8 /* DemandEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62ED0C331B65D4FD00F0A5C8 /* DemandEditController.m */; };
+		62ED0C371B6625C200F0A5C8 /* DemandManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 62ED0C361B6625C200F0A5C8 /* DemandManager.m */; };
+		62ED0C3A1B6626FE00F0A5C8 /* DemandModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 62ED0C391B6626FE00F0A5C8 /* DemandModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,8 +144,6 @@
 		18E0809E1B465EB600AABF9E /* LeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftViewController.m; sourceTree = "<group>"; };
 		18E080A71B46609900AABF9E /* ProjectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectModel.h; sourceTree = "<group>"; };
 		18E080A81B46609900AABF9E /* ProjectModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectModel.m; sourceTree = "<group>"; };
-		18E080A91B46609900AABF9E /* DemandModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemandModel.h; sourceTree = "<group>"; };
-		18E080AA1B46609900AABF9E /* DemandModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemandModel.m; sourceTree = "<group>"; };
 		18E080BE1B46638E00AABF9E /* LeftSlideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftSlideViewController.h; sourceTree = "<group>"; };
 		18E080BF1B46638E00AABF9E /* LeftSlideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftSlideViewController.m; sourceTree = "<group>"; };
 		18E080C01B46638E00AABF9E /* UIView_extra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIView_extra.h; sourceTree = "<group>"; };
@@ -163,6 +163,12 @@
 		62EB5F241B60DB6100017A94 /* navBar@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navBar@3x.png"; sourceTree = "<group>"; };
 		62EB5F2B1B60DD1A00017A94 /* leftbackiamge1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = leftbackiamge1.jpg; sourceTree = "<group>"; };
 		62EB5F2F1B60DE4F00017A94 /* leftbackiamge2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = leftbackiamge2.png; sourceTree = "<group>"; };
+		62ED0C321B65D4FD00F0A5C8 /* DemandEditController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemandEditController.h; sourceTree = "<group>"; };
+		62ED0C331B65D4FD00F0A5C8 /* DemandEditController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemandEditController.m; sourceTree = "<group>"; };
+		62ED0C351B6625C200F0A5C8 /* DemandManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemandManager.h; sourceTree = "<group>"; };
+		62ED0C361B6625C200F0A5C8 /* DemandManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemandManager.m; sourceTree = "<group>"; };
+		62ED0C381B6626FE00F0A5C8 /* DemandModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemandModel.h; sourceTree = "<group>"; };
+		62ED0C391B6626FE00F0A5C8 /* DemandModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemandModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,6 +261,8 @@
 				18E0809E1B465EB600AABF9E /* LeftViewController.m */,
 				62EB44BF1B6221D800A98D0B /* DemandDetailController.h */,
 				62EB44C01B6221D800A98D0B /* DemandDetailController.m */,
+				62ED0C321B65D4FD00F0A5C8 /* DemandEditController.h */,
+				62ED0C331B65D4FD00F0A5C8 /* DemandEditController.m */,
 				18E080C91B466AD700AABF9E /* CardViewController.h */,
 				18E080CA1B466AD700AABF9E /* CardViewController.m */,
 			);
@@ -264,10 +272,10 @@
 		18E080871B465D9300AABF9E /* CoreDataModel */ = {
 			isa = PBXGroup;
 			children = (
+				62ED0C381B6626FE00F0A5C8 /* DemandModel.h */,
+				62ED0C391B6626FE00F0A5C8 /* DemandModel.m */,
 				18E080A71B46609900AABF9E /* ProjectModel.h */,
 				18E080A81B46609900AABF9E /* ProjectModel.m */,
-				18E080A91B46609900AABF9E /* DemandModel.h */,
-				18E080AA1B46609900AABF9E /* DemandModel.m */,
 				18E080631B4659E200AABF9E /* ProjectEstimation.xcdatamodeld */,
 			);
 			path = CoreDataModel;
@@ -278,6 +286,8 @@
 			children = (
 				18CD9BD61B53B180002701E2 /* ProjectManager.h */,
 				18CD9BD71B53B180002701E2 /* ProjectManager.m */,
+				62ED0C351B6625C200F0A5C8 /* DemandManager.h */,
+				62ED0C361B6625C200F0A5C8 /* DemandManager.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -513,14 +523,16 @@
 				18E080CB1B466AD700AABF9E /* CardViewController.m in Sources */,
 				18E081371B46717100AABF9E /* ProjectView.m in Sources */,
 				62EB44C11B6221D800A98D0B /* DemandDetailController.m in Sources */,
+				62ED0C371B6625C200F0A5C8 /* DemandManager.m in Sources */,
 				18E0809F1B465EB600AABF9E /* LeftViewController.m in Sources */,
+				62ED0C3A1B6626FE00F0A5C8 /* DemandModel.m in Sources */,
 				18999B521B4C0069003B9295 /* DemandCollectionViewCell.m in Sources */,
 				18E080AB1B46609900AABF9E /* ProjectModel.m in Sources */,
 				18E080621B4659E200AABF9E /* AppDelegate.m in Sources */,
 				18E0809A1B465E7C00AABF9E /* MainViewController.m in Sources */,
 				18E080651B4659E200AABF9E /* ProjectEstimation.xcdatamodeld in Sources */,
-				18E080AC1B46609900AABF9E /* DemandModel.m in Sources */,
 				18E080C31B46638E00AABF9E /* UIView_extra.m in Sources */,
+				62ED0C341B65D4FD00F0A5C8 /* DemandEditController.m in Sources */,
 				18CD9BFB1B53C002002701E2 /* PopProjectView.m in Sources */,
 				18E0805F1B4659E200AABF9E /* main.m in Sources */,
 				18E080C21B46638E00AABF9E /* LeftSlideViewController.m in Sources */,

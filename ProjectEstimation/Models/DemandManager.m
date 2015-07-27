@@ -1,49 +1,59 @@
 //
-//  ProjectManager.m
+//  DemandManager.m
 //  ProjectEstimation
 //
-//  Created by apple on 15/7/13.
+//  Created by YuanRong on 15/7/27.
 //  Copyright (c) 2015年 Felix M L. All rights reserved.
 //
 
-#import "ProjectManager.h"
+#import "DemandManager.h"
 #import "AppDelegate.h"
+#import "ProjectManager.h"
 
-@implementation ProjectManager
+@implementation DemandManager
 
-+ (void)addProjectWithName:(NSString *)name
-               imageString:(NSString *)image
++ (void)addDemandWithTitle:(NSString *)title
+             picPathString:(NSString *)path
+                 desString:(NSString *)desString
                 createDate:(NSDate *)date
+                  parentId:(NSString *)parentId
+                identifier:(NSString *)identifier
 {
     AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     NSManagedObjectContext *context = delegate.managedObjectContext;
     
-    ProjectModel *model = [NSEntityDescription insertNewObjectForEntityForName:@"ProjectModel" inManagedObjectContext:context];
-    model.nameString = name;
-    model.bgColorString = image;
+    DemandModel *model = [NSEntityDescription insertNewObjectForEntityForName:@"DemandModel" inManagedObjectContext:context];
+    model.titleString = title;
+    model.picPathString = path;
     model.createDate = date;
-    model.projectIdString = [NSUUID UUID].UUIDString;
+    model.desString = desString;
+    model.demandIdString = identifier;
+    model.projectIdString = parentId;
+    
+    ProjectModel *parentModel = [ProjectManager fetchModelByIdentifier:parentId];
+    model.toProject = parentModel;
     
     NSError *error;
     if(![context save:&error])
     {
         NSLog(@"保存失败：%@",[error localizedDescription]);
     }
+    
 }
 
-+ (void)deleteProjectFromDataBaseByIdentifier:(NSString *)identifier
++ (void)deleteDemandFromDataBaseByIdentifier:(NSString *)identifier
 {
     AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     NSManagedObjectContext *context = delegate.managedObjectContext;
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ProjectModel" inManagedObjectContext:context];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DemandModel" inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     
     NSError *error;
     NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
-    for (ProjectModel *info in fetchedObjects) {
-        if ([info.projectIdString isEqualToString:identifier]) {
+    for (DemandModel *info in fetchedObjects) {
+        if ([info.demandIdString isEqualToString:identifier]) {
             [context deleteObject:info];
         }
     }
@@ -54,26 +64,30 @@
     }
 }
 
-+ (void)editProjectWithName:(NSString *)name
-                imageString:(NSString *)image
-               ByIdentifier:(NSString *)identifier
++ (void)editDemandWithTitle:(NSString *)title
+              picPathString:(NSString *)path
+                  desString:(NSString *)desString
+                 identifier:(NSString *)identifier
 {
     AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     NSManagedObjectContext *context = delegate.managedObjectContext;
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ProjectModel" inManagedObjectContext:context];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DemandModel" inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     
     NSError *error;
     NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
-    for (ProjectModel *model in fetchedObjects) {
-        if ([model.projectIdString isEqualToString:identifier]) {
-            if (name && ![name isEqualToString:@""]) {
-                model.nameString = name;
+    for (DemandModel *model in fetchedObjects) {
+        if ([model.demandIdString isEqualToString:identifier]) {
+            if (title && ![title isEqualToString:@""]) {
+                model.titleString = title;
             }
-            if (image && ![image isEqualToString:@""]) {
-                model.bgColorString = image;
+            if (path && ![path isEqualToString:@""]) {
+                model.picPathString = path;
+            }
+            if (desString && ![desString isEqualToString:@""]) {
+                model.desString = desString;
             }
         }
     }
@@ -84,7 +98,7 @@
     }
 }
 
-+ (NSMutableArray *)fetchProjects
++ (NSMutableArray *)fetchProjectsByParentId:(NSString *)parentId
 {
     NSMutableArray *result = [[NSMutableArray alloc] init];
     AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -94,16 +108,19 @@
     NSSortDescriptor *sort=[NSSortDescriptor sortDescriptorWithKey:@"createDate" ascending:NO];
     fetchRequest.sortDescriptors = @[sort];
     
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ProjectModel" inManagedObjectContext:context];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DemandModel" inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     
     NSError *error;
     NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
     
     if (fetchedObjects.count > 0) {
-        for (ProjectModel *model in fetchedObjects) {
+        for (DemandModel *model in fetchedObjects) {
             if (model && ![result containsObject:model]) {
-                [result addObject:model];
+//                NSLog(@"%@ ----%@",model.projectIdString, parentId);
+                if ([model.projectIdString isEqualToString:parentId]) {
+                    [result addObject:model];
+                }
             }
         }
     }
@@ -111,14 +128,4 @@
     return result;
 }
 
-+ (ProjectModel *)fetchModelByIdentifier:(NSString *)identifier
-{
-    NSMutableArray *array = [ProjectManager fetchProjects];
-    for (ProjectModel *model in array) {
-        if ([model.projectIdString isEqualToString:identifier]) {
-            return model;
-        }
-    }
-    return nil;
-}
 @end

@@ -23,4 +23,6 @@
 
 + (NSMutableArray *)fetchProjects;
 
++ (ProjectModel *)fetchModelByIdentifier:(NSString *)identifier;
+
 @end

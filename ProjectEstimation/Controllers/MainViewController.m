@@ -13,6 +13,9 @@
 #import "DemandCollectionViewCell.h"
 #import "Macro.h"
 #import "DemandDetailController.h"
+#import "DemandEditController.h"
+#import "DemandManager.h"
+#import "ProjectManager.h"
 
 static NSUInteger const CELL_COUNT = 15;
 static NSString * const CELL_IDENTIFIER =  @"WaterfallCell";
@@ -24,6 +27,8 @@ static NSUInteger const ADDBUTTON_WIDTH = 40;
 @property (nonatomic, strong) NSMutableArray *cellSizes;
 @property (nonatomic, strong) NSMutableArray *desStringArray;
 @property (nonatomic, strong) UIButton *addDemandButton;
+@property (nonatomic, copy) NSMutableString *projectIdString;
+@property (nonatomic, strong) ProjectModel *projectModel;
 
 @end
 
@@ -67,6 +72,8 @@ static NSUInteger const ADDBUTTON_WIDTH = 40;
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor], NSFontAttributeName : [UIFont boldSystemFontOfSize:18.0]}];
     self.navigationController.navigationBar.translucent = NO;
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"主界面" style:UIBarButtonItemStylePlain target:self action:NULL];
+    
     
     // leftBarButtonItem
     UIButton *menuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -122,22 +129,41 @@ static NSUInteger const ADDBUTTON_WIDTH = 40;
 }
 
 - (void)gotoCardMode:(UIBarButtonItem *)sender {
+    UIViewController *vc = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     CardViewController *cardVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CardVC"];
-    [self.navigationController presentViewController:cardVC animated:YES completion:^{
+    [vc presentViewController:cardVC animated:YES completion:^{
         
     }];
 }
 
 - (void)changeProjectTitle:(NSNotification *)sender
 {
-    self.title = sender.object;
+    self.projectModel = [ProjectManager fetchModelByIdentifier:sender.object];
+    [self.projectIdString setString:[sender.object mutableCopy]];
+    CLog(@"1111%@",self.projectIdString);
+    self.title = self.projectModel.nameString;
+    
+    [self obtainDemandModels];
+    [self.demandCollectionView reloadData];
 }
 
 - (void)addDemandAction:(UIButton *)sender
 {
-    
+    DemandEditController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"DemandEditVC"];
+    vc.currentMode = DemandModeAdd;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
+- (void)obtainDemandModels
+{
+    NSMutableArray *array = [DemandManager fetchProjectsByParentId:[self.projectIdString mutableCopy]];
+    CLog(@"222%@",self.projectIdString);
+    for (DemandModel *model in array) {
+        NSString *string = [[NSString alloc] initWithFormat:@"%@",model.titleString];
+        [self.desStringArray addObject:string];
+    }
+    
+}
 #pragma mark - UICollectionViewDelegateFlowLayout
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
@@ -154,7 +180,9 @@ static NSUInteger const ADDBUTTON_WIDTH = 40;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return CELL_COUNT;
+    [self obtainDemandModels];
+    
+    return self.desStringArray.count;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -167,7 +195,9 @@ static NSUInteger const ADDBUTTON_WIDTH = 40;
     DemandCollectionViewCell *cell = (DemandCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CELL_IDENTIFIER forIndexPath:indexPath];
 
     cell.image = nil;
+    if (self.desStringArray.count > indexPath.row) {
     cell.desString = [self.desStringArray objectAtIndex:indexPath.row];
+    }
     
     return cell;
 }
@@ -205,15 +235,14 @@ static NSUInteger const ADDBUTTON_WIDTH = 40;
 - (NSMutableArray *)desStringArray {
     if (!_desStringArray) {
         _desStringArray = [NSMutableArray array];
-        for (int i = 0; i < CELL_COUNT; i ++) {
-            NSMutableString *string = [[NSMutableString alloc] init];
-            for (int j = arc4random()%(i +1) ; j < i + 1; j ++) {
-                [string appendString:@"任务 alias"];
-            }
-            [_desStringArray addObject:string];
-        }
     }
     return _desStringArray;
 }
 
+- (NSMutableString *)projectIdString {
+    if (!_projectIdString) {
+        _projectIdString = [[NSMutableString alloc] init];
+    }
+    return _projectIdString;
+}
 @end

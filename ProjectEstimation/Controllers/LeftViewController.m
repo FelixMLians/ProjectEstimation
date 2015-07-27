@@ -174,9 +174,12 @@
             NSString *identifierString = cell.projectIdString;
             
             [[NSUserDefaults standardUserDefaults] setObject:identifierString forKey:kCurrentSelectedCell];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kCurrentTitleChangeNotification object:[identifierString mutableCopy]];
+            
             [self.tableview reloadData];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:kCurrentTitleChangeNotification object:cell.projectView.nameString];
+            
         }
         else {
             //        ProjectTableViewCell *cell = (ProjectTableViewCell *)[self.tableview cellForRowAtIndexPath:self.currentEditModeCellIndexPath];

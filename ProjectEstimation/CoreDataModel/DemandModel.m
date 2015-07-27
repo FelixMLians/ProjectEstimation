@@ -1,9 +1,9 @@
 //
 //  DemandModel.m
-//  
+//  ProjectEstimation
 //
-//  Created by apple on 15/7/3.
-//
+//  Created by YuanRong on 15/7/27.
+//  Copyright (c) 2015年 Felix M L. All rights reserved.
 //
 
 #import "DemandModel.h"
@@ -12,13 +12,12 @@
 
 @implementation DemandModel
 
-@dynamic demandIdString;
 @dynamic createDate;
+@dynamic demandIdString;
 @dynamic desString;
-@dynamic personString;
-@dynamic bgColorString;
-@dynamic isComplete;
 @dynamic picPathString;
+@dynamic titleString;
 @dynamic toProject;
+@dynamic projectIdString;
 
 @end
