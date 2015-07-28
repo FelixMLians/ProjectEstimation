@@ -108,7 +108,8 @@
     NSSortDescriptor *sort=[NSSortDescriptor sortDescriptorWithKey:@"createDate" ascending:NO];
     fetchRequest.sortDescriptors = @[sort];
     
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DemandModel" inManagedObjectContext:context];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DemandModel"
+                                              inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     
     NSError *error;
@@ -117,7 +118,6 @@
     if (fetchedObjects.count > 0) {
         for (DemandModel *model in fetchedObjects) {
             if (model && ![result containsObject:model]) {
-//                NSLog(@"%@ ----%@",model.projectIdString, parentId);
                 if ([model.projectIdString isEqualToString:parentId]) {
                     [result addObject:model];
                 }
@@ -126,6 +126,33 @@
     }
     
     return result;
+}
+
++ (DemandModel *)fetchModelByDemandId:(NSString *)demandId
+{
+    AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    NSManagedObjectContext *context = delegate.managedObjectContext;
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSSortDescriptor *sort=[NSSortDescriptor sortDescriptorWithKey:@"createDate" ascending:NO];
+    fetchRequest.sortDescriptors = @[sort];
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DemandModel"
+                                              inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    
+    NSError *error;
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    
+    if (fetchedObjects.count > 0) {
+        for (DemandModel *model in fetchedObjects) {
+            if (model && [model.demandIdString isEqualToString:demandId]) {
+                return model;
+            }
+        }
+    }
+    
+    return nil;
 }
 
 @end

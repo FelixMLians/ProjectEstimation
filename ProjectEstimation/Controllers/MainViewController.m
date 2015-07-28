@@ -17,15 +17,13 @@
 #import "DemandManager.h"
 #import "ProjectManager.h"
 
-static NSUInteger const CELL_COUNT = 15;
 static NSString * const CELL_IDENTIFIER =  @"WaterfallCell";
 static NSUInteger const ADDBUTTON_WIDTH = 40;
 
 @interface MainViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic , strong) UICollectionView *demandCollectionView;
-@property (nonatomic, strong) NSMutableArray *cellSizes;
-@property (nonatomic, strong) NSMutableArray *desStringArray;
+@property (nonatomic, strong) NSMutableArray *demandArray;
 @property (nonatomic, strong) UIButton *addDemandButton;
 @property (nonatomic, copy) NSMutableString *projectIdString;
 @property (nonatomic, strong) ProjectModel *projectModel;
@@ -38,7 +36,7 @@ static NSUInteger const ADDBUTTON_WIDTH = 40;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [self setUpUI];
     [self setupAddButton];
 }
@@ -46,12 +44,14 @@ static NSUInteger const ADDBUTTON_WIDTH = 40;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
+    
     AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [tempAppDelegate.LeftSlideVC setPanEnabled:YES];
     
     // 标题改变通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeProjectTitle:) name:kCurrentTitleChangeNotification object:nil];
+    
+    [self.demandCollectionView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -140,30 +140,46 @@ static NSUInteger const ADDBUTTON_WIDTH = 40;
 {
     self.projectModel = [ProjectManager fetchModelByIdentifier:sender.object];
     [self.projectIdString setString:[sender.object mutableCopy]];
-    CLog(@"1111%@",self.projectIdString);
     self.title = self.projectModel.nameString;
     
-    [self obtainDemandModels];
     [self.demandCollectionView reloadData];
 }
 
 - (void)addDemandAction:(UIButton *)sender
 {
+    if (self.projectIdString && ![self.projectIdString isEqualToString:@""]) {
     DemandEditController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"DemandEditVC"];
     vc.currentMode = DemandModeAdd;
+    vc.projectIdString = self.projectIdString;
     [self.navigationController pushViewController:vc animated:YES];
+    }
+    else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请您先在左边创建项目，并选中项目！" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+        [alert show];
+    }
 }
 
 - (void)obtainDemandModels
 {
+    [self.demandArray removeAllObjects];
+    
     NSMutableArray *array = [DemandManager fetchProjectsByParentId:[self.projectIdString mutableCopy]];
-    CLog(@"222%@",self.projectIdString);
     for (DemandModel *model in array) {
-        NSString *string = [[NSString alloc] initWithFormat:@"%@",model.titleString];
-        [self.desStringArray addObject:string];
+        if (![self.demandArray containsObject:model]) {
+            [self.demandArray addObject:model];
+        }
     }
     
 }
+
+- (NSString *)pathOfCollectionImageByString:(NSString *)string
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    NSString *docDir = [paths objectAtIndex:0];
+    NSString *filePath = [docDir stringByAppendingPathComponent:string];
+    return filePath;
+}
+
 #pragma mark - UICollectionViewDelegateFlowLayout
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
@@ -182,7 +198,7 @@ static NSUInteger const ADDBUTTON_WIDTH = 40;
 {
     [self obtainDemandModels];
     
-    return self.desStringArray.count;
+    return self.demandArray.count;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -192,11 +208,25 @@ static NSUInteger const ADDBUTTON_WIDTH = 40;
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    DemandCollectionViewCell *cell = (DemandCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CELL_IDENTIFIER forIndexPath:indexPath];
-
+    DemandCollectionViewCell *cell = (DemandCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:[NSString stringWithFormat:@"%@",CELL_IDENTIFIER]
+                                                                                                           forIndexPath:indexPath];
+    
     cell.image = nil;
-    if (self.desStringArray.count > indexPath.row) {
-    cell.desString = [self.desStringArray objectAtIndex:indexPath.row];
+    
+    if (self.demandArray.count > indexPath.row) {
+        DemandModel *model = self.demandArray[indexPath.row];
+        cell.desString = model.titleString;
+        
+        if (model.picPathString && ![model.picPathString isEqualToString:@""]) {
+            NSString *path = [self pathOfCollectionImageByString:model.picPathString];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            UIImage *image = [[UIImage alloc] initWithContentsOfFile:path];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [cell setImage:image];
+            });
+        });
+        }
+        cell.demandIdString = model.demandIdString;
     }
     
     return cell;
@@ -232,16 +262,19 @@ static NSUInteger const ADDBUTTON_WIDTH = 40;
     return _demandCollectionView;
 }
 
-- (NSMutableArray *)desStringArray {
-    if (!_desStringArray) {
-        _desStringArray = [NSMutableArray array];
+- (NSMutableArray *)demandArray {
+    if (!_demandArray) {
+        _demandArray = [NSMutableArray array];
     }
-    return _desStringArray;
+    return _demandArray;
 }
 
 - (NSMutableString *)projectIdString {
     if (!_projectIdString) {
         _projectIdString = [[NSMutableString alloc] init];
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:kCurrentSelectedCell]) {
+            [_projectIdString setString:[[NSUserDefaults standardUserDefaults] objectForKey:kCurrentSelectedCell]];
+        }
     }
     return _projectIdString;
 }

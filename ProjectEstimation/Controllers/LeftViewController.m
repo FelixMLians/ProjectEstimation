@@ -13,6 +13,7 @@
 #import "ProjectModel.h"
 #import "PopProjectView.h"
 #import "Macro.h"
+#import "LoginViewController.h"
 
 @interface LeftViewController ()<UITableViewDelegate, UITableViewDataSource, ProjectCellButtonDelegate, PopProjectViewDelegate, UIAlertViewDelegate>
 
@@ -142,7 +143,7 @@
     
     [button setImage:[UIImage imageNamed:@"menu_headview"] forState:UIControlStateNormal];
     [button setImage:[UIImage imageNamed:@"menu_headview_pressed"] forState:UIControlStateHighlighted];
-    
+    [button addTarget:self action:@selector(gotoLoginPage:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:button];
     
     return view;
@@ -243,6 +244,15 @@
 {
     [cell setCurrentProjectMode:ProjectCellModeNormal];
     self.isEditMode = NO;
+}
+
+- (void)gotoLoginPage:(UIButton *)sender {
+    LoginViewController *loginVC = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginVC"];
+    [self presentViewController:loginVC
+                       animated:YES
+                     completion:^{
+    }];
+    
 }
 
 #pragma mark - PopProjectViewDelegate

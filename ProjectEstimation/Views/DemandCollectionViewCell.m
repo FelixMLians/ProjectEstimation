@@ -43,10 +43,7 @@
 - (void)addImageView {
     
     if (!self.image) {
-    // Pick a cat at random.
-    NSUInteger pickACat = arc4random()%5 + 1;     // Vary from 1 to 4.
-    NSString *imageName = [NSString stringWithFormat:@"background%zd", pickACat];
-    self.image = [UIImage imageNamed:imageName];
+        self.image = [self obtainRandomImage];
     }
     
     self.imageView = [[UIImageView alloc] initWithImage:self.image];
@@ -81,6 +78,11 @@
     [self.desView addSubview:self.desLabel];
 }
 
+- (UIImage *)obtainRandomImage {
+    NSUInteger pickACat = arc4random()%5 + 1;     // Vary from 1 to 4.
+    NSString *imageName = [NSString stringWithFormat:@"background%zd", pickACat];
+    return [UIImage imageNamed:imageName];
+}
 
 #pragma mark - setter methods
 
@@ -94,7 +96,10 @@
     _image = image;
     
     if (image) {
-    [self.imageView setImage:image];
+        [self.imageView setImage:image];
+    }
+    else {
+        [self.imageView setImage:[self obtainRandomImage]];
     }
 }
 

@@ -9,6 +9,7 @@
 #import "DemandDetailController.h"
 #import "Macro.h"
 #import "DemandEditController.h"
+#import "DemandManager.h"
 
 static CGFloat const kSpaceLength = 10;
 
@@ -27,19 +28,44 @@ static CGFloat const kSpaceLength = 10;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUI];
-    
-    self.hasImage = NO;
-    [self addDemandImageView];
-    self.labelDataSource = [[NSMutableArray alloc] initWithCapacity:9];
-    [self addDemandLabels];
 }
 
 - (void)viewWillLayoutSubviews {
     self.mainScrollView.contentSize = CGSizeMake(self.mainScrollView.frame.size.width, self.scrollViewContentHeight);
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self initialDataSource];
+}
+
 #pragma mark - 
 
-
+- (void)initialDataSource
+{
+    self.labelDataSource = [[NSMutableArray alloc] init];
+    DemandModel *model = [DemandManager fetchModelByDemandId:self.demandIdString];
+    
+    if (model) {
+        
+        self.title = model.titleString;
+        
+        if (model.picPathString && ![model.picPathString isEqualToString:@""]) {
+            NSString *path = [self pathOfCollectionImageByString:model.picPathString];
+            self.hasImage = YES;
+            [self addDemandImageViewBySting:path];
+        }
+        else {
+            self.hasImage = NO;
+        }
+        
+        if (model.desString && ![model.desString isEqualToString:@""]) {
+            [self.labelDataSource setArray:[model.desString componentsSeparatedByString:@";"]];
+            [self addDemandLabels];
+        }
+        
+    }
+}
 
 #pragma mark - private method
 
@@ -49,7 +75,7 @@ static CGFloat const kSpaceLength = 10;
     imageView.image = [UIImage imageNamed:@"demandBg.jpg"];
     [self.view addSubview:imageView];
     
-    self.title = @"任务需求标题";
+    self.title = @"任务需求";
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:NULL];
     
     UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -63,7 +89,7 @@ static CGFloat const kSpaceLength = 10;
     [self.view addSubview:self.mainScrollView];
 }
 
-- (void)addDemandImageView
+- (void)addDemandImageViewBySting:(NSString *)path
 {
     if (self.hasImage) {
         self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(kSpaceLength, kSpaceLength, SCREEN_WIDTH - kSpaceLength * 2, SCREEN_WIDTH - kSpaceLength * 2)];
@@ -71,16 +97,34 @@ static CGFloat const kSpaceLength = 10;
         self.imageView.layer.cornerRadius = 6.0;
         self.imageView.clipsToBounds = YES;
         [self.mainScrollView addSubview:self.imageView];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            UIImage *image = [[UIImage alloc] initWithContentsOfFile:path];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.imageView setImage:image];
+            });
+        });
+    }
+}
+
+- (void)removeAllSubviewsOfScrollView
+{
+    for (UIView *view in self.mainScrollView.subviews) {
+        if ([view isKindOfClass:[UILabel class]]) {
+        [view removeFromSuperview];
+        }
     }
 }
 
 - (void)addDemandLabels
 {
+    [self removeAllSubviewsOfScrollView];
+    
     CGFloat labelYPosition = self.imageView.frame.size.height + self.imageView.frame.origin.y + kSpaceLength;
     if (1) {
-        for (int i = 0 ; i < 9; i ++) {
+        for (int i = 0 ; i < self.labelDataSource.count; i ++) {
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(kSpaceLength, labelYPosition + i*45, SCREEN_WIDTH - kSpaceLength * 2, 30)];
-            label.text = [NSString stringWithFormat:@" 步骤 %d 每天都要做任务，做锻炼", i];
+            label.text = [NSString stringWithFormat:@" 0%d %@", i + 1, self.labelDataSource[i]];
             label.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
             label.layer.cornerRadius = 6.0;
             label.clipsToBounds = YES;
@@ -100,4 +144,13 @@ static CGFloat const kSpaceLength = 10;
     vc.currentMode = DemandModeEdit;
     [self.navigationController pushViewController:vc animated:YES];
 }
+
+- (NSString *)pathOfCollectionImageByString:(NSString *)string
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    NSString *docDir = [paths objectAtIndex:0];
+    NSString *filePath = [docDir stringByAppendingPathComponent:string];
+    return filePath;
+}
+
 @end

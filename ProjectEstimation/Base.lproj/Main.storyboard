@@ -41,6 +41,40 @@
             </objects>
             <point key="canvasLocation" x="-2982.5" y="-418.5"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="7fC-Du-gFP">
+            <objects>
+                <navigationController storyboardIdentifier="LoginNavVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Sok-zi-2kD" sceneMemberID="viewController">
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ecb-b2-cIU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KWa-BX-WY7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3502.5" y="334.5"/>
+        </scene>
+        <!--Login View Controller-->
+        <scene sceneID="cnM-fe-uT8">
+            <objects>
+                <viewController storyboardIdentifier="LoginVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="iCx-5Z-Za1" customClass="LoginViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4YC-Nu-wKT"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ylv-lW-iFO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="RrJ-iZ-YAR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="GPB-Xe-Vxy"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fas-LL-bQ7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2982.5" y="334.5"/>
+        </scene>
         <!--Main View Controller-->
         <scene sceneID="gwM-hD-KRP">
             <objects>

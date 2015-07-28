@@ -39,6 +39,22 @@
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    if ([self.titleTextField isFirstResponder]) {
+        [self.titleTextField resignFirstResponder];
+    }
+    
+    for (UITextField *textField in self.stepTextFields) {
+        if ([textField isFirstResponder]) {
+            [textField resignFirstResponder];
+        }
+    }
+    
+    [self.mainScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+}
+
 #pragma mark - UI
 
 - (void)initialSetup
@@ -57,11 +73,42 @@
     }
     else {
         self.title = @"编辑任务";
+        [self addFormerInfo];
     }
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"保 存" style:UIBarButtonItemStylePlain target:self action:@selector(confirmEditAction:)];
 }
 
+- (void)addFormerInfo
+{
+        NSMutableArray *labelDataSource = [[NSMutableArray alloc] init];
+        DemandModel *model = [DemandManager fetchModelByDemandId:self.demandIdString];
+        
+        if (model) {
+            self.titleTextField.text = model.titleString;
+            
+            if (model.picPathString && ![model.picPathString isEqualToString:@""]) {
+                NSString *path = [self pathOfCollectionImageByString:model.picPathString];
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                    UIImage *image = [[UIImage alloc] initWithContentsOfFile:path];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.imageView setImage:image];
+                    });
+                });
+
+            }
+            
+            if (model.desString && ![model.desString isEqualToString:@""]) {
+                [labelDataSource setArray:[model.desString componentsSeparatedByString:@";"]];
+                for (int i = 0 ; i < labelDataSource.count; i ++) {
+                    UITextField *textField = (UITextField *)[self.mainScrollView viewWithTag:101 + i];
+                    textField.text = labelDataSource[i];
+                }
+            }
+            
+        }
+
+}
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -77,10 +124,12 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     if (SCREEN_HEIGHT < 667) {
-        [self.mainScrollView setContentOffset:CGPointMake(0, textField.frame.origin.y + textField.frame.size.height + 20) animated:YES];
+        if (textField.tag > 100) {
+        [self.mainScrollView setContentOffset:CGPointMake(0, textField.frame.origin.y + textField.frame.size.height + 10) animated:YES];
+        }
     }
     else {
-        if (105 == textField.tag) {
+        if (textField.tag >= 104) {
             [self.mainScrollView setContentOffset:CGPointMake(0, textField.frame.origin.y + textField.frame.size.height + 20) animated:YES];
         }
     }
@@ -147,20 +196,31 @@
 
 - (void)handleTapGestureRecognizer:(UITapGestureRecognizer *)sender {
     
+    if ([self.titleTextField isFirstResponder]) {
+        [self.titleTextField resignFirstResponder];
+    }
+    
     for (UITextField *textField in self.stepTextFields) {
         if ([textField isFirstResponder]) {
             [textField resignFirstResponder];
         }
     }
+    
+    [self.mainScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 
 - (void)confirmEditAction:(UIBarButtonItem *)sender {
-    NSMutableString *desString = [[NSMutableString alloc] init];
     
-    for (UITextField *textField in self.stepTextFields) {
+    NSMutableString *desString = [[NSMutableString alloc] init];
+    for (int i = 101; i < 106; i ++) {
+        UITextField *textField = (UITextField *)[self.mainScrollView viewWithTag:i];
+        if (![textField.text isEqualToString:@""]) {
         [desString appendFormat:@"%@;",textField.text];
+        }
     }
+    if (desString.length > 1) {
     [desString replaceCharactersInRange:NSMakeRange(desString.length - 1, 1) withString:@""];
+    }
     
     if (self.currentMode == DemandModeAdd) {
         [DemandManager addDemandWithTitle:self.titleTextField.text
@@ -219,10 +279,18 @@
     }
 }
 
+- (NSString *)pathOfCollectionImageByString:(NSString *)string
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    NSString *docDir = [paths objectAtIndex:0];
+    NSString *filePath = [docDir stringByAppendingPathComponent:string];
+    return filePath;
+}
+
 #pragma mark - getter method
 
 - (NSMutableString *)picPathString {
-    if (_picPathString) {
+    if (!_picPathString) {
         _picPathString = [[NSMutableString alloc] init];
     }
     return _picPathString;

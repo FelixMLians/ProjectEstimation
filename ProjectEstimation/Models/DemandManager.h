@@ -27,4 +27,6 @@
 
 + (NSMutableArray *)fetchProjectsByParentId:(NSString *)parentId;
 
++ (DemandModel *)fetchModelByDemandId:(NSString *)demandId;
+
 @end
