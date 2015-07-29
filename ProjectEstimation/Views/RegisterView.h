@@ -8,6 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@class  RegisterView;
+
+@protocol RegisterViewDelegate <NSObject>
+
+- (void)dismissRegisterView;
+- (void)registerViewDidRegisterWithAccount:(NSString *)account password:(NSString *)password verifyCode:(NSString *)code;
+- (void)registerViewDidSendVerifyCode;
+
+@end
+
 @interface RegisterView : UIView
+
+@property (nonatomic, weak) id<RegisterViewDelegate> delegate;
 
 @end

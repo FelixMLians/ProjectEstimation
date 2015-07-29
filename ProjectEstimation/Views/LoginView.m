@@ -7,6 +7,9 @@
 //
 
 #import "LoginView.h"
+#import "CLProgressHUD.h"
+#import "Macro.h"
+#import "CLTools.h"
 
 @interface LoginView()<UITextFieldDelegate>
 
@@ -42,8 +45,27 @@
 }
 
 - (IBAction)confirmLoginAction:(id)sender {
-    if ([self.delegate respondsToSelector:@selector(loginViewDidLoginWithAccount:password:)]) {
-        [self.delegate loginViewDidLoginWithAccount:self.accountTextField.text password:self.passwordTextField.text];
+    if ([self.accountTextField.text isEqualToString:@""]||[self.passwordTextField.text isEqualToString:@""])
+    {
+        [CLProgressHUD showErrorInView:self delegate:self title:@"手机号码或密码不能为空" duration:kCommonDurantion];
+        return;
+    }
+    else{
+        if (self.accountTextField.text.length != 11 || ![CLTools isValidatePhoneNumber:self.accountTextField.text])
+        {
+            [CLProgressHUD showErrorInView:self delegate:self title:@"手机号码格式不对" duration:kCommonDurantion];
+            return;
+        }
+        else if (self.passwordTextField.text.length < 6 || ![CLTools isValidateString:self.passwordTextField.text])
+        {
+            [CLProgressHUD showErrorInView:self delegate:self title:@"密码由6-15位字符或字母组成" duration:kCommonDurantion];
+            return;
+        }
+        else {
+            if ([self.delegate respondsToSelector:@selector(loginViewDidLoginWithAccount:password:)]) {
+                [self.delegate loginViewDidLoginWithAccount:self.accountTextField.text password:self.passwordTextField.text];
+            }
+        }
     }
 }
 
@@ -97,5 +119,37 @@
     }
 }
 
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (201 == textField.tag)
+    {
+        NSUInteger lengthOfString = string.length;
+        for (NSInteger loopIndex = 0; loopIndex < lengthOfString; loopIndex++) {
+            char character = [string characterAtIndex:loopIndex];
+            NSString *characterStr = [NSString stringWithFormat:@"%c",character];
+            NSString *totalStr = @"_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            if (!([totalStr rangeOfString:characterStr].length > 0)) return NO;
+        }
+        NSUInteger proposedNewLength = textField.text.length - range.length + string.length;
+        if (proposedNewLength > 16) return NO;
+        return YES;
+    }
+    
+    if (200 == textField.tag)
+    {
+        NSUInteger lengthOfString = string.length;
+        for (NSInteger loopIndex = 0; loopIndex < lengthOfString; loopIndex++) {//只允许数字输入
+            unichar character = [string characterAtIndex:loopIndex];
+            if (character < 48) return NO; // 48 unichar for 0
+            if (character > 57) return NO; // 57 unichar for 9
+        }
+        NSUInteger proposedNewLength = textField.text.length - range.length + string.length;
+        if (proposedNewLength > 11) return NO;//限制长度
+        return YES;
+    }
+    
+    else
+        return YES;
+}
 
 @end

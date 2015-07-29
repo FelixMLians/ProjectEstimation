@@ -13,10 +13,14 @@
 #import "CLProgressHUD.h"
 #import "Macro.h"
 #import "RegisterView.h"
+#import "UserAccountManager.h"
+#import "AccountView.h"
 
-@interface LoginViewController ()<LoginViewDelegate>
+@interface LoginViewController ()<LoginViewDelegate, RegisterViewDelegate, AccountViewDelegate>
 
 @property (nonatomic, strong) LoginView *loginView;
+@property (nonatomic, strong) AccountView *accountView;
+
 @end
 
 @implementation LoginViewController
@@ -28,12 +32,22 @@
     [self initialUI];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+}
+
 #pragma mark - intial ui
 
 - (void)initialUI
 {
     if ([ClientState shareInstance].currentAccountState == AccountStateLogout) {
         [self addLoginView];
+        [self.view addSubview:self.loginView];
+    }
+    else if ([ClientState shareInstance].currentAccountState == AccountStateLogin) {
+        [self addAccountView];
+        [self.view addSubview:self.accountView];
     }
 }
 
@@ -44,21 +58,121 @@
 }
 
 - (void)loginViewDidLoginWithAccount:(NSString *)account password:(NSString *)password {
-    if ([account isEqualToString:@"123"] && [password isEqualToString:@"123"]) {
-        [CLProgressHUD showSuccessInView:self.view delegate:self title:@"登陆成功" duration:kCommonDurantion];
+    
+    NSMutableString *accountString = [[NSMutableString alloc] initWithString:@"15858286609"];
+    NSMutableString *passString = [[NSMutableString alloc] initWithString:@"123456"];
+    NSDictionary *dict = [UserAccountManager obtainUserAccountByAccount:account];
+    if (dict && ![dict[@"account"] isEqualToString:@""]) {
+        [accountString setString:dict[@"account"]];
+        [passString setString:dict[@"password"]];
+    }
+    if ([account isEqualToString:accountString] && [password isEqualToString:passString]) {
+        [CLProgressHUD showSuccessInView:self.view
+                                delegate:self
+                                   title:@"登陆成功"
+                                duration:kCommonDurantion];
+        [ClientState shareInstance].currentAccountState = AccountStateLogin;
+        
+        [self addAccountView];
+        [UIView transitionFromView:self.loginView
+                            toView:self.accountView
+                          duration:1.0
+                           options: (UIViewAnimationCurveEaseInOut | UIViewAnimationOptionTransitionCurlUp)
+                        completion:^(BOOL finished) {
+                            [self.view addSubview:self.accountView];
+                        }];
     }
     else {
-        [CLProgressHUD showErrorInView:self.view delegate:self title:@"登陆失败" duration:kCommonDurantion];
+        [CLProgressHUD showErrorInView:self.view
+                              delegate:self
+                                 title:@"登陆失败"
+                              duration:kCommonDurantion];
     }
 }
 
 - (void)loginViewDidGotoRegisterView {
-    [UIView animateWithDuration:kCommonDurantion animations:^{
-        RegisterView *registerView = [[RegisterView alloc] initWithFrame:self.view.bounds];
-        [self.view addSubview:registerView];
-    } completion:^(BOOL finished) {
+    
+    RegisterView *registerView = [[RegisterView alloc] initWithFrame:self.view.bounds];
+    registerView.tag = 400;
+    registerView.delegate = self;
+    
+    [UIView transitionFromView:self.loginView
+                        toView:registerView
+                      duration:1.0
+                       options: (UIViewAnimationCurveEaseInOut | UIViewAnimationOptionTransitionCurlUp)
+                    completion:^(BOOL finished) {
+                        [self.view addSubview:registerView];
+                    }];
+}
+
+#pragma mark - RegisterViewDelegate
+
+- (void)dismissRegisterView {
+    RegisterView *view = (RegisterView *)[self.view viewWithTag:400];
+    
+    [UIView transitionFromView:view
+                        toView:self.loginView
+                      duration:1.0
+                       options: (UIViewAnimationCurveEaseInOut | UIViewAnimationOptionTransitionCurlDown)
+                    completion:^(BOOL finished) {
+                        [view removeFromSuperview];
+                    }];
+}
+
+- (void)registerViewDidRegisterWithAccount:(NSString *)account
+                                  password:(NSString *)password
+                                verifyCode:(NSString *)code {
+    if ([code isEqualToString:@"123456"]) {
+        [UserAccountManager addUserAccountByAccount:account password:password];
+        [CLProgressHUD showSuccessInView:self.view
+                                delegate:self
+                                   title:@"注册成功！"
+                                duration:kCommonDurantion];
         
-    }];
+        [self performSelector:@selector(dismissRegisterView)
+                   withObject:nil
+                   afterDelay:kCommonDurantion];
+        
+    }
+    else {
+        [CLProgressHUD showErrorInView:self.view
+                              delegate:self
+                                 title:@"手机验证码不正确！"
+                              duration:kCommonDurantion];
+    }
+}
+
+- (void)registerViewDidSendVerifyCode {
+    CLog(@"Send verify code to your iphone!");
+}
+
+#pragma mark - AccountViewDelegate
+
+- (void)dismissAccountView {
+    [self gobackToLastPage];
+}
+
+- (void)accountViewChangeIcon
+{
+    
+}
+
+- (void)accountViewChangeNickName
+{
+    
+}
+
+- (void)logOut
+{
+    [self addLoginView];
+    [UIView transitionFromView:self.accountView
+                        toView:self.loginView
+                      duration:1.0
+                       options: (UIViewAnimationCurveEaseInOut | UIViewAnimationOptionTransitionCurlDown)
+                    completion:^(BOOL finished) {
+                        [self.view addSubview:self.loginView];
+                    }];
+    [ClientState shareInstance].currentAccountState = AccountStateLogout;
 }
 
 #pragma mark - private method
@@ -74,6 +188,11 @@
 {
     self.loginView = [[LoginView alloc] initWithFrame:self.view.bounds];
     self.loginView.delegate = self;
-    [self.view addSubview:self.loginView];
+}
+
+- (void)addAccountView
+{
+    self.accountView = [[AccountView alloc] initWithFrame:self.view.bounds];
+    self.accountView.delegate = self;
 }
 @end

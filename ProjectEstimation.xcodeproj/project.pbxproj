@@ -92,6 +92,18 @@
 		62ED0C341B65D4FD00F0A5C8 /* DemandEditController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62ED0C331B65D4FD00F0A5C8 /* DemandEditController.m */; };
 		62ED0C371B6625C200F0A5C8 /* DemandManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 62ED0C361B6625C200F0A5C8 /* DemandManager.m */; };
 		62ED0C3A1B6626FE00F0A5C8 /* DemandModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 62ED0C391B6626FE00F0A5C8 /* DemandModel.m */; };
+		62F393DE1B68869800E3C945 /* CLTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F393DD1B68869800E3C945 /* CLTools.m */; };
+		62F393EB1B68B38E00E3C945 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F393E11B68B38E00E3C945 /* FMDatabase.m */; };
+		62F393EC1B68B38E00E3C945 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F393E31B68B38E00E3C945 /* FMDatabaseAdditions.m */; };
+		62F393ED1B68B38E00E3C945 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F393E51B68B38E00E3C945 /* FMDatabasePool.m */; };
+		62F393EE1B68B38E00E3C945 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F393E71B68B38E00E3C945 /* FMDatabaseQueue.m */; };
+		62F393EF1B68B38E00E3C945 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F393EA1B68B38E00E3C945 /* FMResultSet.m */; };
+		62F393F21B68B3A300E3C945 /* YTKKeyValueStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F393F11B68B3A300E3C945 /* YTKKeyValueStore.m */; };
+		62F393F51B68B3D400E3C945 /* UserAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 62F393F41B68B3D400E3C945 /* UserAccountManager.m */; };
+		62F393F71B68B69600E3C945 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 62F393F61B68B69600E3C945 /* libsqlite3.dylib */; };
+		62F3942B1B68C54E00E3C945 /* AccountView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62F3942A1B68C54E00E3C945 /* AccountView.xib */; };
+		62F3942E1B68C96F00E3C945 /* noavatar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62F3942C1B68C96F00E3C945 /* noavatar@2x.png */; };
+		62F3942F1B68C96F00E3C945 /* noavatar@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62F3942D1B68C96F00E3C945 /* noavatar@3x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -219,6 +231,27 @@
 		62ED0C361B6625C200F0A5C8 /* DemandManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemandManager.m; sourceTree = "<group>"; };
 		62ED0C381B6626FE00F0A5C8 /* DemandModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemandModel.h; sourceTree = "<group>"; };
 		62ED0C391B6626FE00F0A5C8 /* DemandModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemandModel.m; sourceTree = "<group>"; };
+		62F393DC1B68869800E3C945 /* CLTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLTools.h; sourceTree = "<group>"; };
+		62F393DD1B68869800E3C945 /* CLTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLTools.m; sourceTree = "<group>"; };
+		62F393E01B68B38E00E3C945 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		62F393E11B68B38E00E3C945 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		62F393E21B68B38E00E3C945 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		62F393E31B68B38E00E3C945 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		62F393E41B68B38E00E3C945 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		62F393E51B68B38E00E3C945 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		62F393E61B68B38E00E3C945 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		62F393E71B68B38E00E3C945 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		62F393E81B68B38E00E3C945 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDB.h; sourceTree = "<group>"; };
+		62F393E91B68B38E00E3C945 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		62F393EA1B68B38E00E3C945 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		62F393F01B68B3A300E3C945 /* YTKKeyValueStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTKKeyValueStore.h; sourceTree = "<group>"; };
+		62F393F11B68B3A300E3C945 /* YTKKeyValueStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTKKeyValueStore.m; sourceTree = "<group>"; };
+		62F393F31B68B3D400E3C945 /* UserAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAccountManager.h; sourceTree = "<group>"; };
+		62F393F41B68B3D400E3C945 /* UserAccountManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAccountManager.m; sourceTree = "<group>"; };
+		62F393F61B68B69600E3C945 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		62F3942A1B68C54E00E3C945 /* AccountView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountView.xib; sourceTree = "<group>"; };
+		62F3942C1B68C96F00E3C945 /* noavatar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noavatar@2x.png"; sourceTree = "<group>"; };
+		62F3942D1B68C96F00E3C945 /* noavatar@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noavatar@3x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,6 +259,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62F393F71B68B69600E3C945 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,6 +276,7 @@
 		18E080501B4659E200AABF9E = {
 			isa = PBXGroup;
 			children = (
+				62F393F61B68B69600E3C945 /* libsqlite3.dylib */,
 				18E0805B1B4659E200AABF9E /* ProjectEstimation */,
 				18E080781B4659E300AABF9E /* ProjectEstimationTests */,
 				18E0805A1B4659E200AABF9E /* Products */,
@@ -340,6 +375,8 @@
 				18CD9BD71B53B180002701E2 /* ProjectManager.m */,
 				62ED0C351B6625C200F0A5C8 /* DemandManager.h */,
 				62ED0C361B6625C200F0A5C8 /* DemandManager.m */,
+				62F393F31B68B3D400E3C945 /* UserAccountManager.h */,
+				62F393F41B68B3D400E3C945 /* UserAccountManager.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -364,6 +401,7 @@
 				62E70BCC1B677395005876F0 /* RegisterView.xib */,
 				62E70BCE1B677C41005876F0 /* AccountView.h */,
 				62E70BCF1B677C41005876F0 /* AccountView.m */,
+				62F3942A1B68C54E00E3C945 /* AccountView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -371,11 +409,14 @@
 		18E080BC1B46637F00AABF9E /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				62F393DF1B68B38E00E3C945 /* FMDB */,
 				62E70BB51B677179005876F0 /* ProgressHUD */,
 				18E080BD1B46637F00AABF9E /* SlideView */,
 				18999B4F1B4BFE4C003B9295 /* Macro.h */,
 				62E70BB21B676BB0005876F0 /* ClientState.h */,
 				62E70BB31B676BB0005876F0 /* ClientState.m */,
+				62F393DC1B68869800E3C945 /* CLTools.h */,
+				62F393DD1B68869800E3C945 /* CLTools.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -394,6 +435,8 @@
 		18E080C41B46665900AABF9E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				62F3942C1B68C96F00E3C945 /* noavatar@2x.png */,
+				62F3942D1B68C96F00E3C945 /* noavatar@3x.png */,
 				62E70BAE1B675FFD005876F0 /* password_blue_logo.png */,
 				62E70BAF1B675FFD005876F0 /* password_gray_logo.png */,
 				62E70BA61B675FD9005876F0 /* login_blue_logo.png */,
@@ -461,6 +504,26 @@
 				62E70BC01B677179005876F0 /* success@2x.png */,
 			);
 			path = ProgressHUD;
+			sourceTree = "<group>";
+		};
+		62F393DF1B68B38E00E3C945 /* FMDB */ = {
+			isa = PBXGroup;
+			children = (
+				62F393F01B68B3A300E3C945 /* YTKKeyValueStore.h */,
+				62F393F11B68B3A300E3C945 /* YTKKeyValueStore.m */,
+				62F393E01B68B38E00E3C945 /* FMDatabase.h */,
+				62F393E11B68B38E00E3C945 /* FMDatabase.m */,
+				62F393E21B68B38E00E3C945 /* FMDatabaseAdditions.h */,
+				62F393E31B68B38E00E3C945 /* FMDatabaseAdditions.m */,
+				62F393E41B68B38E00E3C945 /* FMDatabasePool.h */,
+				62F393E51B68B38E00E3C945 /* FMDatabasePool.m */,
+				62F393E61B68B38E00E3C945 /* FMDatabaseQueue.h */,
+				62F393E71B68B38E00E3C945 /* FMDatabaseQueue.m */,
+				62F393E81B68B38E00E3C945 /* FMDB.h */,
+				62F393E91B68B38E00E3C945 /* FMResultSet.h */,
+				62F393EA1B68B38E00E3C945 /* FMResultSet.m */,
+			);
+			path = FMDB;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -561,6 +624,7 @@
 				18CD9BF21B53B68A002701E2 /* book_cover_4@3x.png in Resources */,
 				62EB44C71B623E5700A98D0B /* add1.png in Resources */,
 				62E70BC31B677179005876F0 /* error.png in Resources */,
+				62F3942E1B68C96F00E3C945 /* noavatar@2x.png in Resources */,
 				18CD9BCE1B53B0EF002701E2 /* book_cover_0@2x.png in Resources */,
 				18CD9BD21B53B0EF002701E2 /* menu_headview@3x.png in Resources */,
 				18CD9BB21B53B0EF002701E2 /* background1@3x.png in Resources */,
@@ -576,6 +640,7 @@
 				18E0806D1B4659E200AABF9E /* Images.xcassets in Resources */,
 				18CD9BB71B53B0EF002701E2 /* background4@2x.png in Resources */,
 				18CD9BEB1B53B68A002701E2 /* book_cover_1@2x.png in Resources */,
+				62F3942F1B68C96F00E3C945 /* noavatar@3x.png in Resources */,
 				18CD9BB41B53B0EF002701E2 /* background2@3x.png in Resources */,
 				18CD9BEF1B53B68A002701E2 /* book_cover_3@2x.png in Resources */,
 				18CD9BD11B53B0EF002701E2 /* menu_headview@2x.png in Resources */,
@@ -596,6 +661,7 @@
 				62EB44C31B622EF300A98D0B /* demandBg.jpg in Resources */,
 				18CD9BF01B53B68A002701E2 /* book_cover_3@3x.png in Resources */,
 				62EB5F271B60DB6100017A94 /* navBar@2x.png in Resources */,
+				62F3942B1B68C54E00E3C945 /* AccountView.xib in Resources */,
 				18CD9BFD1B53C0CD002701E2 /* PopProjectView.xib in Resources */,
 				18CD9BCC1B53B0EF002701E2 /* menu_accounts_bg_special@2x.png in Resources */,
 				18CD9BF61B53B68A002701E2 /* btn_book_del@3x.png in Resources */,
@@ -622,22 +688,30 @@
 			files = (
 				18E080CE1B466DE800AABF9E /* ProjectTableViewCell.m in Sources */,
 				18E080CB1B466AD700AABF9E /* CardViewController.m in Sources */,
+				62F393DE1B68869800E3C945 /* CLTools.m in Sources */,
 				62E70BC61B677179005876F0 /* MBProgressHUD.m in Sources */,
+				62F393ED1B68B38E00E3C945 /* FMDatabasePool.m in Sources */,
+				62F393F51B68B3D400E3C945 /* UserAccountManager.m in Sources */,
+				62F393EE1B68B38E00E3C945 /* FMDatabaseQueue.m in Sources */,
 				18E081371B46717100AABF9E /* ProjectView.m in Sources */,
 				62EB44C11B6221D800A98D0B /* DemandDetailController.m in Sources */,
 				62ED0C371B6625C200F0A5C8 /* DemandManager.m in Sources */,
 				18E0809F1B465EB600AABF9E /* LeftViewController.m in Sources */,
 				62ED0C3A1B6626FE00F0A5C8 /* DemandModel.m in Sources */,
+				62F393EF1B68B38E00E3C945 /* FMResultSet.m in Sources */,
 				18999B521B4C0069003B9295 /* DemandCollectionViewCell.m in Sources */,
 				18E080AB1B46609900AABF9E /* ProjectModel.m in Sources */,
 				18E080621B4659E200AABF9E /* AppDelegate.m in Sources */,
+				62F393EB1B68B38E00E3C945 /* FMDatabase.m in Sources */,
 				18E0809A1B465E7C00AABF9E /* MainViewController.m in Sources */,
 				62E70BC51B677179005876F0 /* CLProgressHUD.m in Sources */,
 				18E080651B4659E200AABF9E /* ProjectEstimation.xcdatamodeld in Sources */,
 				18E080C31B46638E00AABF9E /* UIView_extra.m in Sources */,
 				62ED0C341B65D4FD00F0A5C8 /* DemandEditController.m in Sources */,
 				18CD9BFB1B53C002002701E2 /* PopProjectView.m in Sources */,
+				62F393EC1B68B38E00E3C945 /* FMDatabaseAdditions.m in Sources */,
 				62E70BCB1B67737B005876F0 /* RegisterView.m in Sources */,
+				62F393F21B68B3A300E3C945 /* YTKKeyValueStore.m in Sources */,
 				62E70BA01B6751C3005876F0 /* LoginViewController.m in Sources */,
 				18E0805F1B4659E200AABF9E /* main.m in Sources */,
 				18E080C21B46638E00AABF9E /* LeftSlideViewController.m in Sources */,

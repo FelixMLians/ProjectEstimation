@@ -161,7 +161,7 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                             <connections>
-                                <action selector="sendIdentifyingCode:" destination="-1" eventType="touchDragInside" id="eb7-48-YQG"/>
+                                <action selector="sendIdentifyingCode:" destination="-1" eventType="touchUpInside" id="8aS-hW-5gv"/>
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2y0-Ar-s01">

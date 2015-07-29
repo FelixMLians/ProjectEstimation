@@ -12,7 +12,7 @@
 #define kProjectViewFont [UIFont systemFontOfSize:12.0]
 #define kCollectionCellWidth ((SCREEN_WIDTH - 45)/2)
 
-@interface DemandCollectionViewCell()
+@interface DemandCollectionViewCell()<UIAlertViewDelegate>
 
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIView *desView;
@@ -36,6 +36,9 @@
         
         [self addImageView];
         [self addDesView];
+        
+        UILongPressGestureRecognizer *longGr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
+        [self addGestureRecognizer:longGr];
     }
     return self;
 }
@@ -82,6 +85,26 @@
     NSUInteger pickACat = arc4random()%5 + 1;     // Vary from 1 to 4.
     NSString *imageName = [NSString stringWithFormat:@"background%zd", pickACat];
     return [UIImage imageNamed:imageName];
+}
+
+- (void)handleLongPress:(UILongPressGestureRecognizer *)sender
+{
+//    DemandCollectionViewCell *cell = (DemandCollectionViewCell *)sender.view;
+//    [self.currentDemandIdString setString:cell.demandIdString];
+    if (sender.state == UIGestureRecognizerStateBegan) {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"您确定要删除该任务？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [alert show];
+    }
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (1 == buttonIndex) {
+        if ([self.delegate respondsToSelector:@selector(deleteDemandCellByIdentifier:)]) {
+            [self.delegate deleteDemandCellByIdentifier:self.demandIdString];
+        }
+    }
 }
 
 #pragma mark - setter methods

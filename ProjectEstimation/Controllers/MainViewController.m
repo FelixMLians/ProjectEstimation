@@ -20,7 +20,7 @@
 static NSString * const CELL_IDENTIFIER =  @"WaterfallCell";
 static NSUInteger const ADDBUTTON_WIDTH = 40;
 
-@interface MainViewController ()<UICollectionViewDataSource, UICollectionViewDelegate>
+@interface MainViewController ()<UICollectionViewDataSource, UICollectionViewDelegate, DemandCollectionCellDelegate>
 
 @property (nonatomic , strong) UICollectionView *demandCollectionView;
 @property (nonatomic, strong) NSMutableArray *demandArray;
@@ -197,7 +197,6 @@ static NSUInteger const ADDBUTTON_WIDTH = 40;
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     [self obtainDemandModels];
-    
     return self.demandArray.count;
 }
 
@@ -229,6 +228,8 @@ static NSUInteger const ADDBUTTON_WIDTH = 40;
         cell.demandIdString = model.demandIdString;
     }
     
+    cell.delegate = self;
+    
     return cell;
 }
 
@@ -237,6 +238,13 @@ static NSUInteger const ADDBUTTON_WIDTH = 40;
     DemandDetailController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"DemandDetailVC"];
     vc.demandIdString = cell.demandIdString;
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - DemandCollectionCellDelegate
+
+- (void)deleteDemandCellByIdentifier:(NSString *)identifier {
+    [DemandManager deleteDemandFromDataBaseByIdentifier:identifier];
+    [self.demandCollectionView reloadData];
 }
 
 #pragma mark - Accessors
@@ -278,4 +286,5 @@ static NSUInteger const ADDBUTTON_WIDTH = 40;
     }
     return _projectIdString;
 }
+
 @end

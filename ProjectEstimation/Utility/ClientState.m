@@ -39,4 +39,13 @@
     return self;
 }
 
+- (void)setCurrentAccountState:(AccountState)currentAccountState {
+    _currentAccountState = currentAccountState;
+    if (currentAccountState == AccountStateLogin) {
+        [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithInt:11] forKey:kCurrentAccoutStateKey];
+    }
+    else if (currentAccountState == AccountStateLogout) {
+        [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithInt:10] forKey:kCurrentAccoutStateKey];
+    }
+}
 @end

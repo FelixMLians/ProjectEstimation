@@ -14,7 +14,7 @@
 #define kCurrentAccoutStateKey @"CurrentAccoutStateKey"
 #define kCurrentSelectedCell @"kCurrentSelectedCell"
 #define kCurrentTitleChangeNotification @"CurrentTitleChangeNotification"
-#define kCommonDurantion 2.5
+#define kCommonDurantion 2.0
 
 #pragma mark -
 
