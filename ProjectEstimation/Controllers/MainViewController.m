@@ -8,7 +8,7 @@
 
 #import "MainViewController.h"
 #import "AppDelegate.h"
-#import "CardViewController.h"
+#import "OfferWallController.h"
 #import "ProjectView.h"
 #import "DemandCollectionViewCell.h"
 #import "Macro.h"
@@ -130,10 +130,8 @@ static NSUInteger const ADDBUTTON_WIDTH = 40;
 
 - (void)gotoCardMode:(UIBarButtonItem *)sender {
     UIViewController *vc = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    CardViewController *cardVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CardVC"];
-    [vc presentViewController:cardVC animated:YES completion:^{
-        
-    }];
+    OfferWallController *offerWallVC = [self.storyboard instantiateViewControllerWithIdentifier:@"OfferWallVC"];
+    [vc presentViewController:offerWallVC animated:YES completion:NULL];
 }
 
 - (void)changeProjectTitle:(NSNotification *)sender

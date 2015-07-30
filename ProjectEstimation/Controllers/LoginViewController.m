@@ -15,8 +15,9 @@
 #import "RegisterView.h"
 #import "UserAccountManager.h"
 #import "AccountView.h"
+#import "ProjectManager.h"
 
-@interface LoginViewController ()<LoginViewDelegate, RegisterViewDelegate, AccountViewDelegate>
+@interface LoginViewController ()<LoginViewDelegate, RegisterViewDelegate, AccountViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (nonatomic, strong) LoginView *loginView;
 @property (nonatomic, strong) AccountView *accountView;
@@ -154,12 +155,15 @@
 
 - (void)accountViewChangeIcon
 {
-    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"修改头像" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照", @"相册", nil];
+    [actionSheet showInView:self.view];
 }
 
 - (void)accountViewChangeNickName
 {
-    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"请输入您的昵称:" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alert show];
 }
 
 - (void)logOut
@@ -175,13 +179,45 @@
     [ClientState shareInstance].currentAccountState = AccountStateLogout;
 }
 
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (0 == buttonIndex) {
+        [self openCamera];
+    }
+    else if (1 == buttonIndex) {
+        [self openPhotoAlbum];
+    }
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (1 == buttonIndex) {
+  NSString *string = [alertView textFieldAtIndex:0].text;
+    [self.accountView.nicknameButton setTitle:string forState:UIControlStateNormal];
+    }
+}
+
+#pragma mark - UIImagePickerControllerDelegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    [self.accountView.iconButton setImage:chosenImage forState:UIControlStateNormal];
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
 #pragma mark - private method
 
 - (void)gobackToLastPage
 {
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)addLoginView
@@ -194,5 +230,54 @@
 {
     self.accountView = [[AccountView alloc] initWithFrame:self.view.bounds];
     self.accountView.delegate = self;
+    
+   NSArray *array = [ProjectManager fetchProjects];
+    self.accountView.projectNumberLabel.text = [NSString stringWithFormat:@"%zd 个",array.count];
 }
+
+- (void)openCamera
+{
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                              message:@"当前摄像头不可用！"
+                                                             delegate:self
+                                                    cancelButtonTitle:@"知道了"
+                                                    otherButtonTitles: nil];
+        
+        [myAlertView show];
+    }
+    else {
+        [self showImagePickerControllerBysoureType:UIImagePickerControllerSourceTypeCamera];
+    }
+
+}
+
+- (void)openPhotoAlbum
+{
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        
+        UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                              message:@"当前相册不可用！"
+                                                             delegate:self
+                                                    cancelButtonTitle:@"知道了"
+                                                    otherButtonTitles: nil];
+        
+        [myAlertView show];
+    }
+    else {
+        [self showImagePickerControllerBysoureType:UIImagePickerControllerSourceTypePhotoLibrary];
+    }
+}
+
+- (void)showImagePickerControllerBysoureType:(UIImagePickerControllerSourceType )sourceType
+{
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = sourceType;
+    
+    [self presentViewController:picker animated:YES completion:NULL];
+}
+
 @end

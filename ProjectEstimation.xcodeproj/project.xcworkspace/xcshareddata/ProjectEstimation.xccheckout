@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>D6C497F9-F1D9-423C-B841-3ED36BC62B64</string>
 	<key>IDESourceControlProjectName</key>
-	<string>ProjectEstimation</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>2F6634B569602B7568D6B1A2ED797F9A6EC45897</key>
 		<string>github.com:FelixMLians/ProjectEstimation.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ProjectEstimation.xcodeproj</string>
+	<string>ProjectEstimation.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>2F6634B569602B7568D6B1A2ED797F9A6EC45897</key>

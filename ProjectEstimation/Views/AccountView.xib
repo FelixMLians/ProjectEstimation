@@ -43,7 +43,7 @@
                                 <action selector="gobackToLastPage:" destination="-1" eventType="touchUpInside" id="JN7-aZ-ScT"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hG0-ln-lfL">
+                        <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hG0-ln-lfL">
                             <rect key="frame" x="127" y="111" width="120" height="120"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="120" id="N1i-Sw-EHQ"/>
@@ -52,6 +52,17 @@
                             <state key="normal" backgroundImage="noavatar.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="6"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                    <integer key="value" value="2"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
+                                    <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="changeIconAction:" destination="-1" eventType="touchUpInside" id="69p-Q7-ssj"/>
                             </connections>
@@ -63,7 +74,7 @@
                                 <constraint firstAttribute="width" constant="60" id="sLK-N1-8zZ"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eyj-tn-FcQ">
@@ -88,12 +99,13 @@
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9eS-sv-nZ0">
                             <rect key="frame" x="0.0" y="617" width="375" height="50"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="eDL-d7-X1I"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                             <state key="normal" title="退  出  登  录" backgroundImage="login_button_up.png">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <state key="selected" backgroundImage="login_button_down.png"/>
@@ -109,11 +121,11 @@
                                 <constraint firstAttribute="width" constant="60" id="qhy-dJ-5w9"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="centerX" secondItem="eyj-tn-FcQ" secondAttribute="centerX" constant="0.5" id="2IQ-Fe-pAo"/>
                         <constraint firstAttribute="bottom" secondItem="9eS-sv-nZ0" secondAttribute="bottom" id="30y-on-VLQ"/>
