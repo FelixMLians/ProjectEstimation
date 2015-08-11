@@ -123,7 +123,7 @@
 - (void)registerViewDidRegisterWithAccount:(NSString *)account
                                   password:(NSString *)password
                                 verifyCode:(NSString *)code {
-    if ([code isEqualToString:@"123456"]) {
+    if (![code isEqualToString:@""]) {
         [UserAccountManager addUserAccountByAccount:account password:password];
         [CLProgressHUD showSuccessInView:self.view
                                 delegate:self

@@ -194,6 +194,7 @@
 
 - (void)handleLongPressAction:(UILongPressGestureRecognizer *)sender
 {
+    if (sender.state == UIGestureRecognizerStateBegan) {
     if (self.isEditMode) {
         //        ProjectTableViewCell *cell = (ProjectTableViewCell *)[self.tableview cellForRowAtIndexPath:self.currentEditModeCellIndexPath];
         if (self.currentCell) {
@@ -205,7 +206,7 @@
     ProjectTableViewCell *cell = (ProjectTableViewCell *)sender.view;
     self.currentCell = cell;
     [cell addEditButtonAndDeleteButton];
-    
+    }
 }
 
 //- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {

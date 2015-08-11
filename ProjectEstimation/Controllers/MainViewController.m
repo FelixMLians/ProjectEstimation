@@ -146,10 +146,10 @@ static NSUInteger const ADDBUTTON_WIDTH = 40;
 - (void)addDemandAction:(UIButton *)sender
 {
     if (self.projectIdString && ![self.projectIdString isEqualToString:@""]) {
-    DemandEditController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"DemandEditVC"];
-    vc.currentMode = DemandModeAdd;
-    vc.projectIdString = self.projectIdString;
-    [self.navigationController pushViewController:vc animated:YES];
+        DemandEditController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"DemandEditVC"];
+        vc.currentMode = DemandModeAdd;
+        vc.projectIdString = self.projectIdString;
+        [self.navigationController pushViewController:vc animated:YES];
     }
     else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请您先在左边创建项目，并选中项目！" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
@@ -216,12 +216,12 @@ static NSUInteger const ADDBUTTON_WIDTH = 40;
         
         if (model.picPathString && ![model.picPathString isEqualToString:@""]) {
             NSString *path = [self pathOfCollectionImageByString:model.picPathString];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            UIImage *image = [[UIImage alloc] initWithContentsOfFile:path];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [cell setImage:image];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                UIImage *image = [[UIImage alloc] initWithContentsOfFile:path];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [cell setImage:image];
+                });
             });
-        });
         }
         cell.demandIdString = model.demandIdString;
     }

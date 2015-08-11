@@ -74,7 +74,7 @@
     return _nameString;
 }
 
-- (void)setImageIndex:(NSInteger)imageIndex {
+- (void)setImageIndex:(NSUInteger)imageIndex {
     _imageIndex = imageIndex;
     [bgImgView setImage:[UIImage imageNamed:[NSString stringWithFormat:@"book_cover_%zd", imageIndex]]];
 }

@@ -46,19 +46,25 @@ static CGFloat kProjectTableViewCellHeight = 120;
 - (void)addEditButtonAndDeleteButton
 {
     self.deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.deleteButton.frame = CGRectMake(self.projectView.frame.origin.x - 15 - 44, self.projectView.frame.origin.y + self.projectView.frame.size.height /2 - 22, 40, 40);
+    self.deleteButton.frame = CGRectMake(self.projectView.center.x -10, self.projectView.frame.origin.y + self.projectView.frame.size.height /2 - 22, 20, 20);
     [self.deleteButton setImage:[UIImage imageNamed:@"btn_book_del"] forState:UIControlStateNormal];
     self.deleteButton.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:self.deleteButton];
     [self.deleteButton addTarget:self action:@selector(deleteButtonClickAction:) forControlEvents:UIControlEventTouchUpInside];
     
     self.editButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.editButton.frame = CGRectMake(self.projectView.frame.origin.x + self.projectView.frame.size.width + 15, self.projectView.frame.origin.y + self.projectView.frame.size.height /2 - 22, 40, 40);
+    self.editButton.frame = CGRectMake(self.projectView.center.x - 10, self.projectView.frame.origin.y + self.projectView.frame.size.height /2 - 22, 20, 20);
     [self.editButton setImage:[UIImage imageNamed:@"btn_book_edit"] forState:UIControlStateNormal];
     self.editButton.backgroundColor = [UIColor clearColor];
     [self.contentView addSubview:self.editButton];
     [self.editButton addTarget:self action:@selector(editButtonClickAction:) forControlEvents:UIControlEventTouchUpInside];
     
+    [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+        self.deleteButton.frame = CGRectMake(self.projectView.frame.origin.x - 15 - 44, self.projectView.frame.origin.y + self.projectView.frame.size.height /2 - 22, 40, 40);
+        self.editButton.frame = CGRectMake(self.projectView.frame.origin.x + self.projectView.frame.size.width + 15, self.projectView.frame.origin.y + self.projectView.frame.size.height /2 - 22, 40, 40);
+    } completion:^(BOOL finished) {
+        
+    }];
 }
 
 #pragma mark - private methods
